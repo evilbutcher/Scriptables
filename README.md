@@ -6,12 +6,14 @@
 复制代码或者导入模块即可使用。   
 #### 直接安装模块[地址](https://github.com/evilbutcher/Scriptables/blob/master/ScriptableModule)
 
-#### [知乎热榜demo](https://github.com/evilbutcher/Scriptables/tree/master/WeiboMonitor.js)
+#### [知乎热榜](https://github.com/evilbutcher/Scriptables/tree/master/WeiboMonitor.js)
 
-#### [微博热搜demo](https://github.com/evilbutcher/Scriptables/blob/master/ZhihuMonitor.js)
+#### [微博热搜](https://github.com/evilbutcher/Scriptables/blob/master/ZhihuMonitor.js)
   
-#### [人人影视资源demo](https://github.com/evilbutcher/Scriptables/blob/master/RRShareMonitor.js)
+#### [人人影视资源](https://github.com/evilbutcher/Scriptables/blob/master/RRShareMonitor.js)
 
-#### [B站榜单demo](https://github.com/evilbutcher/Scriptables/blob/master/BilibiliMonitor.js)
+#### [B站榜单](https://github.com/evilbutcher/Scriptables/blob/master/BilibiliMonitor.js)
 
-#### [RSS监控demo](https://github.com/evilbutcher/Scriptables/blob/master/RSSMonitor.js)
+#### [RSS监控](https://github.com/evilbutcher/Scriptables/blob/master/RSSMonitor.js)
+
+#### [豆瓣电影监控](https://github.com/evilbutcher/Scriptables/blob/master/DoubanMonitor.js)
