@@ -10,10 +10,11 @@
 const $ = new importModule("Env")();
 const rid = 0; //手动更改B站榜单对应关系：0全站，1动画，3音乐，4游戏，5娱乐，36科技，119鬼畜，129舞蹈。
 const res = await getinfo();
-
-let widget = createWidget(res);
-Script.setWidget(widget);
-Script.complete();
+if (config.runsInWidget) {
+  let widget = createWidget(res)
+  Script.setWidget(widget)
+  Script.complete()
+}
 
 function createWidget(res) {
   const obj = res;
@@ -59,6 +60,7 @@ function createWidget(res) {
   const top6Line = w.addText(`•${items[5]}`);
   top6Line.textSize = 12;
   top6Line.textColor = new Color("#ffa7d3");
+  w.presentMedium()
   return w;
 }
 

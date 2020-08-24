@@ -1,5 +1,5 @@
 # Scriptable 脚本整理
-本仓库【Scriptables】用于我自己编写和测试软件Scriptable脚本代码等。  
+本仓库【Scriptables】用于我自己使用、编写和测试软件Scriptable脚本代码等。  
 #### 需要注意的是，我暂时还没用升级iOS 14，所以代码可能存在问题，欢迎反馈。
 [Scriptable](https://github.com/evilbutcher/Scriptable)用于与[GideonSenku's Scriptable](https://github.com/GideonSenku/Scriptable)不定期同步，具体使用文档和脚本使用方法请前往@GideonSenku仓库的README.md。  
 ## 因Scriptable目前还未上线商店版，以下脚本均为demo测试，变动较大。 

@@ -10,10 +10,11 @@
 const $ = new importModule("Env")();
 const rsslink = "http://songshuhui.net/feed";
 const res = await getinfo();
-
-let widget = createWidget(res);
-Script.setWidget(widget);
-Script.complete();
+if (config.runsInWidget) {
+  let widget = createWidget(res)
+  Script.setWidget(widget)
+  Script.complete()
+}
 
 function createWidget(res) {
   const obj = res;
@@ -61,6 +62,7 @@ function createWidget(res) {
     const top6Line = w.addText(`[第六名]${items[5]}`);
     top6Line.textSize = 12;
     top6Line.textColor = new Color("#ffa7d3");
+    w.presentMedium()
     return w;
   }
 }
