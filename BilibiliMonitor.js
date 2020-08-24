@@ -6,7 +6,13 @@
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  */
-
+const scripts = [
+  {
+    moduleName: "BilibiliMonitor",
+    url:
+      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/Bilibili/BilibiliMonitor.js",
+  },
+];
 const $ = new importModule("Env")();
 const rid = 0; //手动更改B站榜单对应关系：0全站，1动画，3音乐，4游戏，5娱乐，36科技，119鬼畜，129舞蹈。
 const res = await getinfo();
@@ -83,14 +89,6 @@ async function getinfo() {
 }
 
 //更新代码
-const scripts = [
-  {
-    moduleName: "BilibiliMonitor",
-    url:
-      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/Bilibili/BilibiliMonitor.js",
-  },
-];
-
 function update() {
   log("🔔更新脚本开始!");
   scripts.forEach(async (script) => {

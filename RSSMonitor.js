@@ -6,7 +6,13 @@
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  */
-
+const scripts = [
+  {
+    moduleName: "RSSMonitor",
+    url:
+      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/RSS/RSS.js",
+  },
+];
 const $ = new importModule("Env")();
 const rsslink = "http://songshuhui.net/feed"; //填写RSS订阅链接
 const res = await getinfo();
@@ -92,14 +98,6 @@ async function getinfo() {
 }
 
 //更新代码
-const scripts = [
-  {
-    moduleName: "RSSMonitor",
-    url:
-      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/RSS/RSS.js",
-  },
-];
-
 function update() {
   log("🔔更新脚本开始!");
   scripts.forEach(async (script) => {

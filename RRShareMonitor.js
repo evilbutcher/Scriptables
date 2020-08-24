@@ -6,7 +6,13 @@
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  */
-
+const scripts = [
+  {
+    moduleName: "RRShareMonitor",
+    url:
+      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/RRShare/RRShareMonitor.js",
+  },
+];
 const $ = new importModule("Env")();
 const res = await getinfo();
 if (config.runsInWidget) {
@@ -85,14 +91,6 @@ async function getinfo() {
 }
 
 //更新代码
-const scripts = [
-  {
-    moduleName: "RRShareMonitor",
-    url:
-      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/RRShare/RRShareMonitor.js",
-  },
-];
-
 function update() {
   log("🔔更新脚本开始!");
   scripts.forEach(async (script) => {
