@@ -18,7 +18,14 @@ function createWidget(res) {
   var group = res["subject_collection_items"];
   items = [];
   for (var i = 0; i < 6; i++) {
-    var item = group[i].title;
+    var title = group[i].title;
+    var rating = group[i].rating;
+    if (rating == null) {
+      var star = "暂无";
+    } else {
+      star = rating["star_count"];
+    }
+    var item = title + " " + star + "🌟";
     items.push(item);
   }
   console.log(items);

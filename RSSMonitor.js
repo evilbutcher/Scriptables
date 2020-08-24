@@ -6,7 +6,7 @@
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  */
-const goupdate = true;
+const goupdate = false; //默认关闭，需要更新时请手动打开
 const $ = new importModule("Env")();
 const rsslink = "http://songshuhui.net/feed"; //填写RSS订阅链接
 const res = await getinfo();
