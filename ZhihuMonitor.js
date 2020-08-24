@@ -6,31 +6,13 @@
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  */
-const scripts = [
-  {
-    moduleName: "ZhihuMonitor",
-    url:
-      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/Zhihu/ZhihuMonitor.js",
-  },
-];
+const goupdate = false;
 const $ = new importModule("Env")();
 const res = await getinfo();
-if (config.runsInWidget) {
-  let widget = createWidget(res);
-  Script.setWidget(widget);
-  Script.complete();
-} else {
-  if (res.fresh_text == "热榜已更新") {
-    var group = res.data;
-    items = [];
-    for (var i = 0; i < 6; i++) {
-      var item = group[i].target.title;
-      items.push(item);
-    }
-    console.log(items);
-  }
-}
-update();
+
+let widget = createWidget(res);
+Script.setWidget(widget);
+Script.complete();
 
 function createWidget(res) {
   if (res.fresh_text == "热榜已更新") {
@@ -40,6 +22,7 @@ function createWidget(res) {
       var item = group[i].target.title;
       items.push(item);
     }
+    console.log(items);
 
     const w = new ListWidget();
     const bgColor = new LinearGradient();
@@ -99,3 +82,12 @@ function update() {
   });
   log("🔔更新脚本结束!");
 }
+
+const scripts = [
+  {
+    moduleName: "ZhihuMonitor",
+    url:
+      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/Zhihu/ZhihuMonitor.js",
+  },
+];
+if (goupdate == true) update();

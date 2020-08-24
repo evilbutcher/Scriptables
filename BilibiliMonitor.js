@@ -6,23 +6,14 @@
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  */
-const goupdate = false
+const goupdate = false;
 const $ = new importModule("Env")();
 const rid = 0; //手动更改B站榜单对应关系：0全站，1动画，3音乐，4游戏，5娱乐，36科技，119鬼畜，129舞蹈。
 const res = await getinfo();
-if (config.runsInWidget) {
-  let widget = createWidget(res);
-  Script.setWidget(widget);
-  Script.complete();
-} else {
-  var group = res.data;
-  items = [];
-  for (var i = 0; i < 6; i++) {
-    var item = group[i].title;
-    items.push(item);
-  }
-  console.log(items);
-}
+
+let widget = createWidget(res);
+Script.setWidget(widget);
+Script.complete();
 
 function createWidget(res) {
   var group = res.data;
@@ -31,6 +22,7 @@ function createWidget(res) {
     var item = group[i].title;
     items.push(item);
   }
+  console.log(items);
 
   const w = new ListWidget();
   const bgColor = new LinearGradient();
@@ -97,4 +89,4 @@ const scripts = [
       "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/Bilibili/BilibiliMonitor.js",
   },
 ];
-if (goupdate) update();
+if (goupdate == true) update();

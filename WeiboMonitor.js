@@ -6,31 +6,13 @@
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  */
-const scripts = [
-  {
-    moduleName: "WeiboMonitor",
-    url:
-      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/Weibo/WeiboMonitor.js",
-  },
-];
+const goupdate = false;
 const $ = new importModule("Env")();
 const res = await getinfo();
-if (config.runsInWidget) {
-  let widget = createWidget(res);
-  Script.setWidget(widget);
-  Script.complete();
-} else {
-  if (res.msg != "这里还没有内容") {
-    var group = res.data.cards[0]["card_group"];
-    items = [];
-    for (var i = 0; i < 6; i++) {
-      var item = group[i].desc;
-      items.push(item);
-    }
-    console.log(items);
-  }
-}
-update();
+
+let widget = createWidget(res);
+Script.setWidget(widget);
+Script.complete();
 
 function createWidget(res) {
   if (res.data.cards[0].title == "实时热点，每分钟更新一次") {
@@ -40,6 +22,7 @@ function createWidget(res) {
       var item = group[i].desc;
       items.push(item);
     }
+    console.log(items);
 
     const w = new ListWidget();
     const bgColor = new LinearGradient();
@@ -100,3 +83,12 @@ function update() {
   });
   log("🔔更新脚本结束!");
 }
+
+const scripts = [
+  {
+    moduleName: "WeiboMonitor",
+    url:
+      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/Weibo/WeiboMonitor.js",
+  },
+];
+if (goupdate == true) update();

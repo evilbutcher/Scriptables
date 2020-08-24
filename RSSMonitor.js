@@ -6,34 +6,14 @@
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  */
-const scripts = [
-  {
-    moduleName: "RSSMonitor",
-    url:
-      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/RSS/RSS.js",
-  },
-];
+const goupdate = false;
 const $ = new importModule("Env")();
 const rsslink = "http://songshuhui.net/feed"; //填写RSS订阅链接
 const res = await getinfo();
 
-if (config.runsInWidget) {
-  let widget = createWidget(res);
-  Script.setWidget(widget);
-  Script.complete();
-} else {
-  if (res.status == "ok") {
-    var titlerss = res.feed.title;
-    var group = res.items;
-    items = [];
-    for (var i = 0; i < 6; i++) {
-      var item = group[i].title;
-      items.push(item);
-    }
-    console.log(items);
-  }
-}
-update();
+let widget = createWidget(res);
+Script.setWidget(widget);
+Script.complete();
 
 function createWidget(res) {
   if (res.status == "ok") {
@@ -44,6 +24,7 @@ function createWidget(res) {
       var item = group[i].title;
       items.push(item);
     }
+    console.log(items);
 
     const w = new ListWidget();
     const bgColor = new LinearGradient();
@@ -105,3 +86,12 @@ function update() {
   });
   log("🔔更新脚本结束!");
 }
+
+const scripts = [
+  {
+    moduleName: "RSSMonitor",
+    url:
+      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/RSS/RSS.js",
+  },
+];
+if (goupdate == true) update();
