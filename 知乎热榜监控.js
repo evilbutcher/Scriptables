@@ -1,6 +1,6 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
-// icon-color: deep-purple; icon-glyph: book-open;
+// icon-color: deep-blue; icon-glyph: fire;
 /**
  * Author: evilbutcher
  * Github: https://github.com/evilbutcher
