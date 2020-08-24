@@ -11,14 +11,22 @@ const $ = new importModule("Env")();
 const rid = 0; //手动更改B站榜单对应关系：0全站，1动画，3音乐，4游戏，5娱乐，36科技，119鬼畜，129舞蹈。
 const res = await getinfo();
 if (config.runsInWidget) {
-  let widget = createWidget(res)
-  Script.setWidget(widget)
-  Script.complete()
+  let widget = createWidget(res);
+  Script.setWidget(widget);
+  Script.complete();
+} else {
+  var group = res.data;
+  items = [];
+  for (var i = 0; i < 6; i++) {
+    var item = group[i].title;
+    items.push(item);
+  }
+  console.log(items);
 }
+update();
 
 function createWidget(res) {
-  const obj = res;
-  var group = obj.data;
+  var group = res.data;
   items = [];
   for (var i = 0; i < 6; i++) {
     var item = group[i].title;
@@ -60,7 +68,7 @@ function createWidget(res) {
   const top6Line = w.addText(`•${items[5]}`);
   top6Line.textSize = 12;
   top6Line.textColor = new Color("#ffa7d3");
-  w.presentMedium()
+  w.presentMedium();
   return w;
 }
 
@@ -72,4 +80,21 @@ async function getinfo() {
   const res = await $.get(blRequest);
   log(res);
   return res;
+}
+
+//更新代码
+const scripts = [
+  {
+    moduleName: "BilibiliMonitor",
+    url:
+      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/Bilibili/BilibiliMonitor.js",
+  },
+];
+
+function update() {
+  log("🔔更新脚本开始!");
+  scripts.forEach(async (script) => {
+    await $.getFile(script);
+  });
+  log("🔔更新脚本结束!");
 }

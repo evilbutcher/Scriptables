@@ -10,15 +10,25 @@
 const $ = new importModule("Env")();
 const res = await getinfo();
 if (config.runsInWidget) {
-  let widget = createWidget(res)
-  Script.setWidget(widget)
-  Script.complete()
+  let widget = createWidget(res);
+  Script.setWidget(widget);
+  Script.complete();
+} else {
+  if (res.fresh_text == "热榜已更新") {
+    var group = res.data;
+    items = [];
+    for (var i = 0; i < 6; i++) {
+      var item = group[i].target.title;
+      items.push(item);
+    }
+    console.log(items);
+  }
 }
+update();
 
 function createWidget(res) {
-  const obj = res;
-  if (obj.fresh_text == "热榜已更新") {
-    var group = obj.data;
+  if (res.fresh_text == "热榜已更新") {
+    var group = res.data;
     items = [];
     for (var i = 0; i < 6; i++) {
       var item = group[i].target.title;
@@ -60,7 +70,7 @@ function createWidget(res) {
     const top6Line = w.addText(`•${items[5]}`);
     top6Line.textSize = 12;
     top6Line.textColor = new Color("#ffa7d3");
-    w.presentMedium()
+    w.presentMedium();
     return w;
   }
 }
@@ -73,4 +83,21 @@ async function getinfo() {
   const res = await $.get(url);
   log(res);
   return res;
+}
+
+//更新代码
+const scripts = [
+  {
+    moduleName: "ZhihuMonitor",
+    url:
+      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/Zhihu/ZhihuMonitor.js",
+  },
+];
+
+function update() {
+  log("🔔更新脚本开始!");
+  scripts.forEach(async (script) => {
+    await $.getFile(script);
+  });
+  log("🔔更新脚本结束!");
 }
