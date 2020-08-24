@@ -6,7 +6,7 @@
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  */
-const goupdate = false;
+const goupdate = true;
 const $ = new importModule("Env")();
 const res = await getinfo();
 
@@ -90,7 +90,7 @@ const scripts = [
   {
     moduleName: "DoubanMonitor",
     url:
-      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/Douban/DoubanMonitor.js",
+      "https://raw.githubusercontent.com/evilbutcher/Scriptables/master/DoubanMonitor.js",
   },
 ];
 if (goupdate == true) update();

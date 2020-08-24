@@ -9,9 +9,9 @@
 ### 脚本模块安装
 合集[地址](https://github.com/evilbutcher/Scriptables/blob/master/ScriptableModule)  
 ### 脚本JS安装
-知乎热榜[地址](https://github.com/evilbutcher/Scriptables/tree/master/ZhihuMonitor.js)  
-微博热搜[地址](https://github.com/evilbutcher/Scriptables/blob/master/WeiboMonitor.js)  
-人人影视资源[地址](https://github.com/evilbutcher/Scriptables/blob/master/RRShareMonitor.js)  
 B站榜单[地址](https://github.com/evilbutcher/Scriptables/blob/master/BilibiliMonitor.js)  
-RSS监控[地址](https://github.com/evilbutcher/Scriptables/blob/master/RSSMonitor.js)  
 豆瓣电影监控[地址](https://github.com/evilbutcher/Scriptables/blob/master/DoubanMonitor.js)  
+人人影视资源[地址](https://github.com/evilbutcher/Scriptables/blob/master/RRShareMonitor.js)  
+RSS监控[地址](https://github.com/evilbutcher/Scriptables/blob/master/RSSMonitor.js)  
+微博热搜[地址](https://github.com/evilbutcher/Scriptables/blob/master/WeiboMonitor.js)  
+知乎热榜[地址](https://github.com/evilbutcher/Scriptables/blob/master/ZhihuMonitor.js)  

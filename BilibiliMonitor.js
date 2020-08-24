@@ -6,7 +6,7 @@
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  */
-const goupdate = false;
+const goupdate = true;
 const $ = new importModule("Env")();
 const rid = 0; //手动更改B站榜单对应关系：0全站，1动画，3音乐，4游戏，5娱乐，36科技，119鬼畜，129舞蹈。
 const res = await getinfo();
@@ -86,7 +86,7 @@ const scripts = [
   {
     moduleName: "BilibiliMonitor",
     url:
-      "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/Bilibili/BilibiliMonitor.js",
+      "https://raw.githubusercontent.com/evilbutcher/Scriptables/master/BilibiliMonitor.js",
   },
 ];
 if (goupdate == true) update();
