@@ -19,6 +19,5 @@ B站榜单[地址](https://github.com/evilbutcher/Scriptables/blob/master/Bilibi
 RSS监控[地址](https://github.com/evilbutcher/Scriptables/blob/master/RSSMonitor.js)  
 微博热搜[地址](https://github.com/evilbutcher/Scriptables/blob/master/WeiboMonitor.js)  
 知乎热榜[地址](https://github.com/evilbutcher/Scriptables/blob/master/ZhihuMonitor.js)  
-
 #### 自定义配置效果
 ![config](https://github.com/evilbutcher/Scriptables/blob/master/picture/config.gif)
