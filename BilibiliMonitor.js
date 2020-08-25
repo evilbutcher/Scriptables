@@ -8,9 +8,16 @@
  */
 const goupdate = true;
 const $ = new importModule("Env")();
-const con = new importModule("Config")();
-var rid = con.bilibili() //采用配置文件中榜单数据
-//var rid = 0;//手动更改B站榜单对应关系：0全站，1动画，3音乐，4游戏，5娱乐，36科技，119鬼畜，129舞蹈。
+//rid对应不同的B站榜单：0全站，1动画，3音乐，4游戏，5娱乐，36科技，119鬼畜，129舞蹈。
+var rid = 0;
+try {
+  const con = new importModule("Config")();
+  var rid = con.bilibili();
+  console.log("将使用配置文件内榜单编号");
+} catch (e) {
+  console.log("将使用脚本内榜单编号");
+}
+
 const res = await getinfo();
 
 let widget = createWidget(res);

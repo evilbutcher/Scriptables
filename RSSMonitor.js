@@ -8,9 +8,17 @@
  */
 const goupdate = true; //默认关闭，需要更新时请手动打开
 const $ = new importModule("Env")();
-const con = new importModule("Config")();
-var rsslink = con.rsslink()//采用配置文件中RSS链接数据
-//const rsslink = "http://songshuhui.net/feed"; //手动填写RSS订阅链接
+// 填写RSS订阅链接,默认为仓库的最近Commit
+// Fill in the RSS subscription link, the default is the latest Commit of the Repo
+var rsslink = "https://github.com/GideonSenku/Scriptable/commits/master.atom";
+try {
+  const con = new importModule("Config")();
+  var rsslink = con.rsslink();
+  console.log("将使用配置文件内订阅链接");
+} catch (e) {
+  console.log("将使用脚本内订阅链接");
+}
+
 const res = await getinfo();
 
 let widget = createWidget(res);
@@ -36,7 +44,7 @@ function createWidget(res) {
     w.centerAlignContent();
 
     const firstLine = w.addText(`[📣]${titlerss}`);
-    firstLine.textSize = 12;
+    firstLine.textSize = 14;
     firstLine.textColor = Color.white();
     firstLine.textOpacity = 0.7;
 
