@@ -9,10 +9,21 @@
 const goupdate = true;
 const $ = new importModule("Env")();
 const res = await getinfo();
-
-let widget = createWidget(res);
-Script.setWidget(widget);
-Script.complete();
+if (config.runsInWidget) {
+  let widget = createWidget(res);
+  Script.setWidget(widget);
+  Script.complete();
+} else {
+  if (res.fresh_text == "热榜已更新") {
+    var group = res.data;
+    items = [];
+    for (var i = 0; i < 6; i++) {
+      var item = group[i].target.title;
+      items.push(item);
+    }
+    console.log(items);
+  }
+}
 
 function createWidget(res) {
   if (res.fresh_text == "热榜已更新") {
