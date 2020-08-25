@@ -1,6 +1,10 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: brown; icon-glyph: download;
+/**
+ * Author: GideonSenku
+ * Github: https://github.com/GideonSenku
+ */
 const scripts = [
     {
       moduleName: '10010',
@@ -26,10 +30,14 @@ const scripts = [
         moduleName: 'ZhihuMonitor',
         url: 'https://raw.githubusercontent.com/GideonSenku/Scriptable/master/Zhihu/ZhihuMonitor.js'
     },
-//     {
-//       moduleName: 'Env',
-//       url: 'https://raw.githubusercontent.com/GideonSenku/Scriptable/master/Env.js'
-//     }
+    {
+        moduleName: "DoubanMonitor",
+        url: "https://raw.githubusercontent.com/GideonSenku/Scriptable/master/Douban/DoubanMonitor.js",
+    },
+    {
+      moduleName: 'Env',
+      url: 'https://raw.githubusercontent.com/GideonSenku/Scriptable/master/Env.js'
+    }
   ]
   
 const $ = new importModule('Env')()
@@ -41,6 +49,3 @@ function update() {
   log('🔔更新脚本结束!')
 }
 update()
-
-  
-  
