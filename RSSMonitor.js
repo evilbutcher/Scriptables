@@ -8,7 +8,9 @@
  */
 const goupdate = false; //默认关闭，需要更新时请手动打开
 const $ = new importModule("Env")();
-const rsslink = "http://songshuhui.net/feed"; //填写RSS订阅链接
+const con = new importModule("Config")();
+var rsslink = con.rsslink()//采用配置文件中RSS链接数据
+//const rsslink = "http://songshuhui.net/feed"; //手动填写RSS订阅链接
 const res = await getinfo();
 
 let widget = createWidget(res);

@@ -1,6 +1,6 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
-// icon-color: pink; icon-glyph: bolt;
+// icon-color: pink; icon-glyph: heartbeat;
 /*
  * Author: evilbutcher
  * Github: https://github.com/evilbutcher
@@ -8,7 +8,9 @@
  */
 const goupdate = true;
 const $ = new importModule("Env")();
-const rid = 0; //手动更改B站榜单对应关系：0全站，1动画，3音乐，4游戏，5娱乐，36科技，119鬼畜，129舞蹈。
+const con = new importModule("Config")();
+var rid = con.bilibili() //采用配置文件中榜单数据
+//var rid = 0;//手动更改B站榜单对应关系：0全站，1动画，3音乐，4游戏，5娱乐，36科技，119鬼畜，129舞蹈。
 const res = await getinfo();
 
 let widget = createWidget(res);
