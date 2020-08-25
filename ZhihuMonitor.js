@@ -1,29 +1,18 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: deep-blue; icon-glyph: book-open;
-/**
+/*
  * Author: evilbutcher
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  */
 const goupdate = true;
-const $ = importModule("Env")
+const $ = importModule("Env");
 const res = await getinfo();
-if (config.runsInWidget) {
-  let widget = createWidget(res);
-  Script.setWidget(widget);
-  Script.complete();
-} else {
-  if (res.fresh_text == "热榜已更新") {
-    var group = res.data;
-    items = [];
-    for (var i = 0; i < 6; i++) {
-      var item = group[i].target.title;
-      items.push(item);
-    }
-    console.log(items);
-  }
-}
+
+let widget = createWidget(res);
+Script.setWidget(widget);
+Script.complete();
 
 function createWidget(res) {
   if (res.fresh_text == "热榜已更新") {
