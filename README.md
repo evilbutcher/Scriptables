@@ -8,10 +8,8 @@
 ## 因Scriptable目前还未上线商店版，以下脚本均为demo测试。 
 ### 如何安装？
 下载.scriptable/.js文件后直接导入Scriptable即可。  
-全部脚本都需要Env，点击[这里(模块)](https://github.com/evilbutcher/Scriptables/blob/master/Env.scriptable)或[这里(JS)](https://github.com/evilbutcher/Scriptables/blob/master/Env.js)安装。  
-部分脚本需要Config，点击[这里(模块)](https://github.com/evilbutcher/Scriptables/blob/master/Config.scriptable)或[这里(JS)](https://github.com/evilbutcher/Scriptables/blob/master/Config.js)安装。  
-### 脚本模块安装
-合集[地址](https://github.com/evilbutcher/Scriptables/blob/master/ScriptableModule)  
+全部脚本都需要Env，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Env.js)安装。  
+部分脚本需要Config，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Config.js)安装。  
 ### 脚本JS安装
 B站榜单[地址](https://github.com/evilbutcher/Scriptables/blob/master/BilibiliMonitor.js)  
 豆瓣电影监控[地址](https://github.com/evilbutcher/Scriptables/blob/master/DoubanMonitor.js)  
