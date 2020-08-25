@@ -40,7 +40,7 @@ const scripts = [
     }
   ]
   
-const $ = new importModule('Env')()
+const $ = new importModule('Env')
 function update() {
   log('🔔更新脚本开始!')
   scripts.forEach(async(script) => {

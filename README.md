@@ -7,7 +7,7 @@
 [Scriptable](https://github.com/evilbutcher/Scriptable)用于与[GideonSenku's Scriptable](https://github.com/GideonSenku/Scriptable)不定期同步，具体使用文档和脚本使用方法请前往@GideonSenku仓库的README.md。  
 ## 因Scriptable目前还未上线商店版，以下脚本均为demo测试。 
 ### 如何安装？
-下载.scriptable/.js文件后直接导入Scriptable即可。  
+下载.js文件后直接导入Scriptable即可。  
 全部脚本都需要Env，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Env.js)安装。  
 部分脚本需要Config，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Config.js)安装。  
 ### 脚本JS安装
