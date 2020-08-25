@@ -6,7 +6,7 @@
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  */
-const goupdate = false; //默认关闭，需要更新时请手动打开
+const goupdate = true; //默认关闭，需要更新时请手动打开
 const $ = new importModule("Env")();
 const con = new importModule("Config")();
 var rsslink = con.rsslink()//采用配置文件中RSS链接数据
