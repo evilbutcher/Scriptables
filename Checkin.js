@@ -19,6 +19,7 @@ const scripts = [
 $.autoLogout = false;
 
 !(async () => {
+  init();
   if (getinfo() == true) {
     launch();
     //QuickLook.present(img);
@@ -34,6 +35,24 @@ $.autoLogout = false;
     log(err);
   })
   .finally(update());
+
+function init() {
+  $.nowtime = new Date().getTime();
+  log($.nowtime);
+  if (Keychain.contains("recordcheckintime") == true) {
+    var recordtime = $.getdata("recordcheckintime");
+    log(recordtime);
+    if ($.nowtime - recordtime > 86400000) {
+      log("哈哈哈");
+      $.cancheckin = true;
+    } else {
+      $.cancheckin = false;
+    }
+  } else {
+   Keychain.set("JSON.stringify($.nowtime)", "recordcheckintime") 
+   log("初始时间已写入")
+  }
+}
 
 function getinfo() {
   try {
@@ -65,7 +84,11 @@ function launch() {
         login(url, email, password, title);
       });
     } else {
-      checkin(url, email, password, title);
+      if (($.cancheckin = true)) {
+        checkin(url, email, password, title);
+      } else {
+        dataResults(url, "今日已签到", title);
+      }
     }
   }
 }
@@ -88,7 +111,11 @@ function login(url, email, password, title) {
     ) {
       $.msg(title + "邮箱或者密码错误");
     } else {
-      checkin(url, email, password, title);
+      if (($.cancheckin = true)) {
+        checkin(url, email, password, title);
+      } else {
+        dataResults(url, "今日已签到", title);
+      }
     }
   });
 }
@@ -165,7 +192,7 @@ function dataResults(url, checkinMsg, title) {
       }
     }
     let flowMsg = resultData == "" ? "流量信息获取失败" : resultData;
-    $.msg(title + "\n" + checkinMsg + "\n" + flowMsg);
+    log(title + "\n" + checkinMsg + "\n" + flowMsg);
   });
 }
 
@@ -190,39 +217,26 @@ function MYERR() {
 function createWidget() {
   const w = new ListWidget();
   const bgColor = new LinearGradient();
-  bgColor.colors = [new Color("#1c1c1c"), new Color("#29323c")];
+  bgColor.colors = [new Color("#a18cd1"), new Color("#fbc2eb")];
   bgColor.locations = [0.0, 1.0];
   w.backgroundGradient = bgColor;
   w.centerAlignContent();
 
-  const firstLine = w.addText(`[📣]${titlerss}`);
-  firstLine.textSize = 14;
-  firstLine.textColor = Color.white();
-  firstLine.textOpacity = 0.7;
+  const emoji = w.addText(`🛩`);
+  emoji.textSize = 30;
 
-  const top1Line = w.addText(`•${items[0]}`);
+  const top1Line = w.addText(title);
   top1Line.textSize = 12;
-  top1Line.textColor = Color.white();
+  top1Line.textColor = Color.black();
 
-  const top2Line = w.addText(`•${items[1]}`);
+  const top2Line = w.addText(checkinMsg);
   top2Line.textSize = 12;
-  top2Line.textColor = new Color("#6ef2ae");
+  top2Line.textColor = Color.black();
 
-  const top3Line = w.addText(`•${items[2]}`);
+  const top3Line = w.addText(flowMsg);
   top3Line.textSize = 12;
-  top3Line.textColor = new Color("#7dbbae");
+  top3Line.textColor = Color.black();
 
-  const top4Line = w.addText(`•${items[3]}`);
-  top4Line.textSize = 12;
-  top4Line.textColor = new Color("#ff9468");
-
-  const top5Line = w.addText(`•${items[4]}`);
-  top5Line.textSize = 12;
-  top5Line.textColor = new Color("#ffcc66");
-
-  const top6Line = w.addText(`•${items[5]}`);
-  top6Line.textSize = 12;
-  top6Line.textColor = new Color("#ffa7d3");
   w.presentMedium();
   return w;
 }
