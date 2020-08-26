@@ -10,6 +10,13 @@
 const goupdate = false;
 const $ = new importModule("Env");
 const ERR = MYERR();
+const scripts = [
+  {
+    moduleName: "NASA",
+    url:
+      "https://raw.githubusercontent.com/evilbutcher/Scriptables/master/NASA.js",
+  },
+];
 
 !(async () => {
   if (checkkey() == true) {
@@ -31,16 +38,18 @@ const ERR = MYERR();
     Script.setWidget(widget);
     Script.complete();
   }
-})().catch((err) => {
-  log(err);
-  if (err instanceof ERR.TokenError) {
-    $.msg("NASA - API 错误" + err.message);
-  } else if (err instanceof ERR.ImageError) {
-    $.msg("NASA - 出现错误❌" + err.message);
-  } else {
-    $.msg("NASA - 出现错误❌" + JSON.stringify(err));
-  }
-});
+})()
+  .catch((err) => {
+    log(err);
+    if (err instanceof ERR.TokenError) {
+      $.msg("NASA - API 错误" + err.message);
+    } else if (err instanceof ERR.ImageError) {
+      $.msg("NASA - 出现错误❌" + err.message);
+    } else {
+      $.msg("NASA - 出现错误❌" + JSON.stringify(err));
+    }
+  })
+  .finally(update());
 
 function checkkey() {
   try {
@@ -116,7 +125,7 @@ function getinfo() {
         if (err instanceof ERR.TimeError) {
           $.msg("NASA - 暂无图片" + err.message);
         }
-        return
+        return;
       }
       resolve();
     });
@@ -125,17 +134,11 @@ function getinfo() {
 
 //更新代码
 function update() {
-  log("🔔更新脚本开始!");
-  scripts.forEach(async (script) => {
-    await $.getFile(script);
-  });
-  log("🔔更新脚本结束!");
+  if (goupdate == true) {
+    log("🔔更新脚本开始!");
+    scripts.forEach(async (script) => {
+      await $.getFile(script);
+    });
+    log("🔔更新脚本结束!");
+  }
 }
-
-const scripts = [
-  {
-    moduleName: "NASA",
-    url: "",
-  },
-];
-if (goupdate == true) update();
