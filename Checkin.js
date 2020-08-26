@@ -61,8 +61,7 @@ function launch() {
         url: url.replace(/(auth|user)\/login(.php)*/g, "") + logoutPath,
       };
       log(logouturl);
-      $.get(logouturl, (response, data) => {
-        log(data);
+      $.getStr(logouturl, (response, data) => {
         login(url, email, password, title);
       });
     } else {
@@ -75,8 +74,10 @@ function login(url, email, password, title) {
   let loginPath =
     url.indexOf("auth/login") != -1 ? "auth/login" : "user/_login.php";
   let table = {
-    url: url.replace(/(auth|user)\/login(.php)*/g, "") + loginPath,
-    body: `email=${email}&passwd=${password}&rumber-me=week`,
+    url:
+      url.replace(/(auth|user)\/login(.php)*/g, "") +
+      loginPath +
+      `?email=${email}&passwd=${password}&rumber-me=week`,
   };
   log(table);
   $.post(table, (response, data) => {
@@ -113,8 +114,8 @@ function dataResults(url, checkinMsg, title) {
   var datarequest = {
     url: url.replace(/(auth|user)\/login(.php)*/g, "") + userPath,
   };
-  console.log(datarequest);
-  $.get(datarequest, (response, data) => {
+  log(datarequest);
+  $.getStr(datarequest, (response, data) => {
     let resultData = "";
     let result = [];
     if (data.match(/theme\/malio/)) {
@@ -181,22 +182,8 @@ function MYERR() {
       this.name = "TokenError";
     }
   }
-  class TimeError extends Error {
-    constructor(message) {
-      super(message);
-      this.name = "TimeError";
-    }
-  }
-  class ImageError extends Error {
-    constructor(message) {
-      super(message);
-      this.name = "ImageError";
-    }
-  }
   return {
     TokenError,
-    TimeError,
-    ImageError,
   };
 }
 
