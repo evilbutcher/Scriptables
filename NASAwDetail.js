@@ -14,7 +14,7 @@ const scripts = [
   {
     moduleName: "NASA",
     url:
-      "https://raw.githubusercontent.com/evilbutcher/Scriptables/master/NASA.js",
+      "https://raw.githubusercontent.com/evilbutcher/Scriptables/master/NASAwDetail.js",
   },
 ];
 
@@ -24,10 +24,12 @@ const scripts = [
     if ($.headers.statusCode == 200) {
       var title = $.data.title;
       var copyright = $.data.copyright;
+      var time = $.data.date;
+      var exp = $.data.explanation;
+      var detail = `🌃 ${title}\n©️Copyright：${copyright}\n⌚️Date：${time}\n${exp}`;
       var cover = $.data.url;
-      var detail = `🌃 ${title}\n©️ ${copyright}`;
     } else {
-      title = "随机展示";
+      title = "随机图片展示";
       cover = $.imglink;
       detail = `🌃 ${title}`;
     }
@@ -73,13 +75,10 @@ function createWidget(img, detail) {
   w.centerAlignContent();
 
   const imgLine = w.addImage(img);
-  imgLine.centerAlignImage();
-  imgLine.imageSize = new Size(330, 330);
   imgLine.containerRelativeShape = true;
 
   const top1Line = w.addText(detail);
-  top1Line.textSize = 15;
-  top1Line.leftAlignText();
+  top1Line.textSize = 12;
   top1Line.textColor = new Color("#7dbbae");
 
   w.presentMedium();
