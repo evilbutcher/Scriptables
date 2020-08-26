@@ -7,7 +7,7 @@
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  * 感谢@MuTu88帮忙测试！
  */
-const goupdate = false;
+const goupdate = true;
 const $ = new importModule("Env");
 const ERR = MYERR();
 const scripts = [
@@ -21,47 +21,43 @@ const scripts = [
 !(async () => {
   if (checkkey() == true) {
     await getinfo();
-    var exp = $.data.explanation || "None";
-    var title = $.data.title || "None";
-    var time = $.data.date || "None";
-    var copyright = $.data.copyright || "None";
-    var detail = `${title}\n©️Copyright：${copyright}\n⌚️Date：${time}\n${exp}`;
-    var cover = $.data.url;
+    var title = $.data.title || "随机展示";
+    var copyright = $.data.copyright || "暂无";
+    var cover = $.data.url || $.imglink;
     try {
       var img = await new Request(cover).loadImage();
     } catch (err) {
-      throw new ERR.ImageError("解析图片错误");
+      throw new ERR.ImageError("NASA提供的是视频/备用图片地址不支持");
     }
     QuickLook.present(img);
-    log(detail);
-    let widget = createWidget(img, detail);
+    let widget = createWidget(img, title, copyright);
     Script.setWidget(widget);
     Script.complete();
   }
 })()
   .catch((err) => {
-    log(err);
     if (err instanceof ERR.TokenError) {
-      $.msg("NASA - API 错误" + err.message);
+      $.msg("NASA - Config配置错误❌\n" + err.message);
     } else if (err instanceof ERR.ImageError) {
-      $.msg("NASA - 出现错误❌" + err.message);
+      $.msg("NASA - 图片错误❌\n" + err.message);
     } else {
-      $.msg("NASA - 出现错误❌" + JSON.stringify(err));
+      $.msg("NASA - 出现错误❌\n" + JSON.stringify(err));
     }
   })
   .finally(update());
 
 function checkkey() {
   try {
-    const { nasaapi } = importModule("Config");
+    const { nasaapi, imglink } = importModule("Config");
     $.apikey = nasaapi();
+    $.imglink = imglink();
     return true;
   } catch (err) {
-    throw new ERR.TokenError("❌ 配置文件中未找到NASA API");
+    throw new ERR.TokenError("❌ 配置文件中未找到NASA API或备用图片地址");
   }
 }
 
-function createWidget(img, detail) {
+function createWidget(img, title, copyright) {
   const w = new ListWidget();
   const bgColor = new LinearGradient();
   bgColor.colors = [new Color("#1c1c1c"), new Color("#29323c")];
@@ -69,18 +65,20 @@ function createWidget(img, detail) {
   w.backgroundGradient = bgColor;
   w.centerAlignContent();
 
-  const firstLine = w.addText(`[📣]NASA`);
-  firstLine.textSize = 12;
+  const imgLine = w.addImage(img);
+  imgLine.centerAlignImage();
+  imgLine.imageSize = new Size(330, 330);
+  imgLine.containerRelativeShape = true;
+
+  const firstLine = w.addText(`🌃 ${title}`);
+  firstLine.applyHeadlineTextStyling();
+  firstLine.leftAlignText();
   firstLine.textColor = Color.white();
-  firstLine.textOpacity = 0.7;
 
-  const top1Line = w.addImage(img);
-  //top1Line.textSize = 12;
-  //top1Line.textColor = new Color("#7dbbae");
-
-  const top2Line = w.addText(detail);
-  top2Line.textSize = 12;
-  top2Line.textColor = new Color("#7dbbae");
+  const top1Line = w.addText(`©️ ${copyright}`);
+  top1Line.textSize = 15;
+  top1Line.leftAlignText();
+  top1Line.textColor = new Color("#7dbbae");
 
   w.presentMedium();
   return w;
