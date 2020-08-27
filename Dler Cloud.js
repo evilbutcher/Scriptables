@@ -15,13 +15,17 @@
 const goupdate = false; //默认关闭，需要时打开，更新后会覆盖脚本已有的签到信息，建议使用Config或Scriptable的iCloud文件夹存入checkin.json文件的方式
 const $ = importModule("Env");
 $.autoLogout = false; //退出登录后再签到
-const para = args.widgetParameter || "c1";
-const fileName = "checkin.json";
-const res = JSON.parse($.read(fileName));
-var checkintitle = res[para].title || ""; //填写签到标题
-var checkinloginurl = res[para].url || ""; //填写签到登陆链接
-var checkinemail = res[para].email || ""; //填写签到邮箱
-var checkinpwd = res[para].password || ""; //填写签到密码
+try {
+  const para = args.widgetParameter || "c1";
+  const fileName = "checkin.json";
+  const res = JSON.parse($.read(fileName));
+  var checkintitle = res[para].title || ""; //填写签到标题
+  var checkinloginurl = res[para].url || ""; //填写签到登陆链接
+  var checkinemail = res[para].email || ""; //填写签到邮箱
+  var checkinpwd = res[para].password || ""; //填写签到密码
+} catch (e) {
+  log("获取JSON文件失败");
+}
 const size = 12; //字体大小
 const isDark = Device.isUsingDarkAppearance();
 const bgColor = new LinearGradient();
