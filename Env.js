@@ -1,6 +1,6 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
-// icon-color: deep-brown; icon-glyph: magic;
+// icon-color: deep-blue; icon-glyph: magic;
 /**
  * Author: GideonSenku
  * Github: https://github.com/GideonSenku
@@ -123,7 +123,7 @@ const require = ({
  * @param {*} fileName 要写入的文件名，默认JS文件，可选其他，加上文件名后缀即可
  * @param {*} content 要写入的文件内容
  */
-const writeFile = (fileName, content) => {
+const write = (fileName, content) => {
   let file = initFile(fileName)
   const filePath = `${dict}/${file}`
   FileManager.iCloud().writeString(filePath, content)
@@ -151,7 +151,7 @@ const initFile = (fileName) => {
  * @param {*} fileName 要读取的文件名，默认JS文件，可选其他，加上文件名后缀即可
  * @return 返回文件内容，字符串形式
  */
-const readFile = (fileName) => {
+const read = (fileName) => {
   const file = initFile(fileName)
   return FileManager.iCloud().readString(`${dict}/${file}`)
 }
@@ -203,10 +203,10 @@ module.exports = {
   _post,
   getFile,
   require,
-  writeFile,
+  write,
   isFileExists,
   initFile,
-  readFile,
+  read,
   setdata,
   getdata,
   hasdata,

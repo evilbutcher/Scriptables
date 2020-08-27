@@ -5,10 +5,16 @@
  * Author: evilbutcher Neurogram
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
+ * 自动更新打开后会运行覆盖脚本内已有修改，两种解决方案
+ * 一、打开自动更新，配置Config文件，请参考https://github.com/evilbutcher/Scriptables/blob/master/Config.js，下载后导入Scriptable，脚本运行会优先调取Config文件中信息。
+ * 二、脚本内配置，关闭自动更新。
  */
-const goupdate = false; //默认关闭，需要更新时请手动打开
+const goupdate = false; //默认打开，便于维护
 const $ = importModule("Env");
-const ERR = MYERR();
+var checkintitle = ""; //填写标题
+var checkinloginurl = ""; //填写登陆链接
+var checkinemail = ""; //填写邮箱
+var checkinpwd = ""; //填写密码
 const scripts = [
   {
     moduleName: "Checkin",
@@ -22,37 +28,15 @@ $.autoLogout = false;
   init();
   if (getinfo() == true) {
     launch();
-    //QuickLook.present(img);
-    //let widget = createWidget();
-    //Script.setWidget(widget);
-    //Script.complete();
+    let widget = createWidget($.checkintitle, $.checkinMsg, $.flowMsg);
+    Script.setWidget(widget);
+    Script.complete();
   }
 })()
   .catch((err) => {
-    if (err instanceof ERR.TokenError) {
-      $.msg("Checkin - Config配置错误❌\n" + err.message);
-    }
-    log(err);
+    $.msg("Checkin运行出现错误❌\n" + err);
   })
   .finally(update());
-
-function init() {
-  $.nowtime = new Date().getTime();
-  log($.nowtime);
-  if (Keychain.contains("recordcheckintime") == true) {
-    var recordtime = $.getdata("recordcheckintime");
-    log(recordtime);
-    if ($.nowtime - recordtime > 86400000) {
-      log("哈哈哈");
-      $.cancheckin = true;
-    } else {
-      $.cancheckin = false;
-    }
-  } else {
-   Keychain.set("JSON.stringify($.nowtime)", "recordcheckintime") 
-   log("初始时间已写入")
-  }
-}
 
 function getinfo() {
   try {
@@ -61,34 +45,55 @@ function getinfo() {
     $.checkinloginurl = con.checkinloginurl();
     $.checkinemail = con.checkinemail();
     $.checkinpwd = con.checkinpwd();
-    return true;
+    log("将使用配置文件内签到信息");
   } catch (err) {
-    throw new ERR.TokenError("Config中未正确获取签到信息");
+    $.checkintitle = checkintitle;
+    $.checkinloginurl = checkinloginurl;
+    $.checkinemail = checkinemail;
+    $.checkinpwd = checkinpwd;
+    log("将使用脚本内签到信息");
+  }
+}
+
+function init() {
+  $.nowtime = new Date().getTime();
+  log($.nowtime);
+  if ($.isFileExists("sbsdata/recordcheckintime.txt") == true) {
+    var recordtime = $.read("sbsdata/recordcheckintime.txt");
+    log(recordtime);
+    if ($.nowtime - recordtime > 86400000) {
+      $.cancheckin = true;
+      $.write("sbsdata/recordcheckintime.txt", JSON.stringify($.nowtime));
+    } else {
+      $.cancheckin = false;
+    }
+  } else {
+    $.write("sbsdata/recordcheckintime.txt", JSON.stringify($.nowtime));
+    log("初始时间已写入");
+    $.cancheckin = true;
   }
 }
 
 function launch() {
-  for (var i in $.checkintitle) {
-    let title = $.checkintitle[i];
-    let url = $.checkinloginurl[i];
-    let email = $.checkinemail[i];
-    let password = $.checkinpwd[i];
-    if ($.autoLogout == true) {
-      let logoutPath =
-        url.indexOf("auth/login") != -1 ? "user/logout" : "user/logout.php";
-      var logouturl = {
-        url: url.replace(/(auth|user)\/login(.php)*/g, "") + logoutPath,
-      };
-      log(logouturl);
-      $.getStr(logouturl, (response, data) => {
-        login(url, email, password, title);
-      });
+  let title = $.checkintitle;
+  let url = $.checkinloginurl;
+  let email = $.checkinemail;
+  let password = $.checkinpwd;
+  if ($.autoLogout == true) {
+    let logoutPath =
+      url.indexOf("auth/login") != -1 ? "user/logout" : "user/logout.php";
+    var logouturl = {
+      url: url.replace(/(auth|user)\/login(.php)*/g, "") + logoutPath,
+    };
+    log(logouturl);
+    $.getStr(logouturl, (response, data) => {
+      login(url, email, password, title);
+    });
+  } else {
+    if ($.cancheckin == true) {
+      checkin(url, email, password, title);
     } else {
-      if (($.cancheckin = true)) {
-        checkin(url, email, password, title);
-      } else {
-        dataResults(url, "今日已签到", title);
-      }
+      dataResults(url, "今日已签到", title);
     }
   }
 }
@@ -111,7 +116,7 @@ function login(url, email, password, title) {
     ) {
       $.msg(title + "邮箱或者密码错误");
     } else {
-      if (($.cancheckin = true)) {
+      if ($.cancheckin == true) {
         checkin(url, email, password, title);
       } else {
         dataResults(url, "今日已签到", title);
@@ -192,6 +197,8 @@ function dataResults(url, checkinMsg, title) {
       }
     }
     let flowMsg = resultData == "" ? "流量信息获取失败" : resultData;
+    $.checkinMsg = checkinMsg;
+    $.flowMsg = flowMsg;
     log(title + "\n" + checkinMsg + "\n" + flowMsg);
   });
 }
@@ -202,19 +209,7 @@ function flowFormat(data) {
   return flow[0] + "B";
 }
 
-function MYERR() {
-  class TokenError extends Error {
-    constructor(message) {
-      super(message);
-      this.name = "TokenError";
-    }
-  }
-  return {
-    TokenError,
-  };
-}
-
-function createWidget() {
+function createWidget(checkintitle, checkinMsg, flowMsg) {
   const w = new ListWidget();
   const bgColor = new LinearGradient();
   bgColor.colors = [new Color("#a18cd1"), new Color("#fbc2eb")];
@@ -225,7 +220,7 @@ function createWidget() {
   const emoji = w.addText(`🛩`);
   emoji.textSize = 30;
 
-  const top1Line = w.addText(title);
+  const top1Line = w.addText(checkintitle);
   top1Line.textSize = 12;
   top1Line.textColor = Color.black();
 
