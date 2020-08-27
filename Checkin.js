@@ -6,18 +6,22 @@
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  * 感谢@MuTu88帮忙测试！
- * 自动更新打开后会运行覆盖脚本内已有修改，两种解决方案
- * 一、打开自动更新，配置Config文件，请参考https://github.com/evilbutcher/Scriptables/blob/master/Config.js，下载后导入Scriptable，脚本运行会优先调取Config文件中信息。
- * 二、脚本内配置，关闭自动更新。
+ * 自动更新打开后会运行覆盖脚本内已有修改，多种解决方案：
+ * 一、配置Config文件，请参考https://github.com/evilbutcher/Scriptables/blob/master/Config.js，下载后导入Scriptable，脚本运行会❗️优先❗️调取Config文件中信息，此方法只能显示❗️一个❗️机场。
+ * 二、【推荐】Scriptable的iCloud文件夹内，配置checkin.json文件(注意文件名)，具体格式参考https://github.com/evilbutcher/Scriptables/blob/master/checkin_example.json，可以通过创建桌面小组件时填入不同参数如“c1”、“c2”等实现读取多个机场信息。
+ * 三、脚本内配置，在下方注释写有填写签到标题的引号内，填写对应的签到信息，注意，此方法一旦更新脚本，所做的更改就会被远程文件覆盖。
  * 脚本运行后，会在iCloud/Scriptable文件夹内写入一个recordcheckintime.txt，用于记录签到时间，脚本逻辑每天签到一次。
  */
-const goupdate = false; //默认关闭，需要时打开，更新后会覆盖脚本已有的签到信息
+const goupdate = false; //默认关闭，需要时打开，更新后会覆盖脚本已有的签到信息，建议使用Config或Scriptable的iCloud文件夹存入checkin.json文件的方式
 const $ = importModule("Env");
-$.autoLogout = true; //退出登录后再签到
-var checkintitle = ""; //填写签到标题
-var checkinloginurl = ""; //填写签到登陆链接
-var checkinemail = ""; //填写签到邮箱
-var checkinpwd = ""; //填写签到密码
+$.autoLogout = false; //退出登录后再签到
+const para = args.widgetParameter || "c1";
+const fileName = "checkin.json";
+const res = JSON.parse($.read(fileName));
+var checkintitle = res[para].title || ""; //填写签到标题
+var checkinloginurl = res[para].url || ""; //填写签到登陆链接
+var checkinemail = res[para].email || ""; //填写签到邮箱
+var checkinpwd = res[para].password || ""; //填写签到密码
 const size = 12; //字体大小
 const isDark = Device.isUsingDarkAppearance();
 const bgColor = new LinearGradient();
@@ -35,7 +39,6 @@ function addTitleTextToListWidget(text, listWidget) {
   item.textColor = isDark ? Color.white() : Color.black();
   item.applyHeadlineTextStyling();
 }
-
 
 const scripts = [
   {
@@ -299,7 +302,7 @@ function createWidget(checkintitle, checkinMsg, todayUsed, usedData, restData) {
   const emoji = w.addText(`🪐`);
   emoji.textSize = 30;
 
-  addTitleTextToListWidget(checkintitle, w)
+  addTitleTextToListWidget(checkintitle, w);
   addTextToListWidget(checkinMsg, w);
   addTextToListWidget(todayUsed, w);
   addTextToListWidget(usedData, w);
