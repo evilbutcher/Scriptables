@@ -13,12 +13,23 @@
  */
 const goupdate = false; //默认关闭，需要时打开，更新后会覆盖脚本已有的签到信息
 const $ = importModule("Env");
-$.autoLogout = true;
+$.autoLogout = true; //退出登录后再签到
+const para = args.widgetParameter.split(",");
+var checkintitle = para[0] || ""; //填写签到标题
+var checkinloginurl = para[1] || ""; //填写签到登陆链接
+var checkinemail = para[2] || ""; //填写签到邮箱
+var checkinpwd = para[3] || ""; //填写签到密码
 
-var checkintitle = ""; //填写签到标题
-var checkinloginurl = ""; //填写签到登陆链接
-var checkinemail = ""; //填写签到邮箱
-var checkinpwd = ""; //填写签到密码
+const isDark = Device.isUsingDarkAppearance();
+const bgColor = new LinearGradient();
+if (isDark) {
+  const textcolor = new Color.white();
+  bgColor.colors = [new Color("#030079"), new Color("#000000")];
+} else {
+  const textcolor = new Color.balck();
+  bgColor.colors = [new Color("#a18cd1"), new Color("#fbc2eb")];
+}
+bgColor.locations = [0.0, 1.0];
 
 const scripts = [
   {
@@ -117,7 +128,7 @@ async function launch() {
           await dataResults(url, $.checkindatamsg, title);
         }
       } else {
-        await dataResults(url, "今日已签到", title);
+        await dataResults(url, "签到完成🎉", title);
       }
     }
   } else {
@@ -129,15 +140,15 @@ async function launch() {
         await login(url, email, password, title);
         if ($.loginok == true) {
           await checkin(url, email, password, title);
-          await dataResults(url, "今日已签到", title);
+          await dataResults(url, "签到完成🎉", title);
         }
       }
     } else {
-      await dataResults(url, "今日已签到", title);
+      await dataResults(url, "签到完成🎉", title);
       if ($.getdata == false) {
         await login(url, email, password, title);
         if ($.loginok == true) {
-          await dataResults(url, "今日已签到", title);
+          await dataResults(url, "签到完成🎉", title);
         }
       }
     }
@@ -276,34 +287,31 @@ function flowFormat(data) {
 
 function createWidget(checkintitle, checkinMsg, todayUsed, usedData, restData) {
   const w = new ListWidget();
-  const bgColor = new LinearGradient();
-  bgColor.colors = [new Color("#a18cd1"), new Color("#fbc2eb")];
-  bgColor.locations = [0.0, 1.0];
   w.backgroundGradient = bgColor;
   w.centerAlignContent();
 
-  const emoji = w.addText(`☄️`);
+  const emoji = w.addText(`🪐`);
   emoji.textSize = 30;
 
   const top1Line = w.addText(checkintitle);
   top1Line.applyHeadlineTextStyling();
-  top1Line.textColor = Color.black();
+  top1Line.textColor = textcolor;
 
   const top2Line = w.addText(checkinMsg);
   top2Line.textSize = 12;
-  top2Line.textColor = Color.black();
+  top2Line.textColor = textcolor;
 
   const top3Line = w.addText(todayUsed);
   top3Line.textSize = 12;
-  top3Line.textColor = Color.black();
+  top3Line.textColor = textcolor;
 
   const top4Line = w.addText(usedData);
   top4Line.textSize = 12;
-  top4Line.textColor = Color.black();
+  top4Line.textColor = textcolor;
 
   const top5Line = w.addText(restData);
   top5Line.textSize = 12;
-  top5Line.textColor = Color.black();
+  top5Line.textColor = textcolor;
 
   w.presentSmall();
   return w;
