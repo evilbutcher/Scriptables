@@ -14,22 +14,28 @@
 const goupdate = false; //默认关闭，需要时打开，更新后会覆盖脚本已有的签到信息
 const $ = importModule("Env");
 $.autoLogout = true; //退出登录后再签到
-const para = args.widgetParameter.split(",");
-var checkintitle = para[0] || ""; //填写签到标题
-var checkinloginurl = para[1] || ""; //填写签到登陆链接
-var checkinemail = para[2] || ""; //填写签到邮箱
-var checkinpwd = para[3] || ""; //填写签到密码
-
+var checkintitle = ""; //填写签到标题
+var checkinloginurl = ""; //填写签到登陆链接
+var checkinemail = ""; //填写签到邮箱
+var checkinpwd = ""; //填写签到密码
+const size = 12; //字体大小
 const isDark = Device.isUsingDarkAppearance();
 const bgColor = new LinearGradient();
-if (isDark) {
-  const textcolor = new Color.white();
-  bgColor.colors = [new Color("#030079"), new Color("#000000")];
-} else {
-  const textcolor = new Color.balck();
-  bgColor.colors = [new Color("#a18cd1"), new Color("#fbc2eb")];
-}
+bgColor.colors = isDark
+  ? [new Color("#030079"), new Color("#000000")]
+  : [new Color("#a18cd1"), new Color("#fbc2eb")];
 bgColor.locations = [0.0, 1.0];
+function addTextToListWidget(text, listWidget) {
+  let item = listWidget.addText(text);
+  item.textColor = isDark ? Color.white() : Color.black();
+  item.textSize = size;
+}
+function addTitleTextToListWidget(text, listWidget) {
+  let item = listWidget.addText(text);
+  item.textColor = isDark ? Color.white() : Color.black();
+  item.applyHeadlineTextStyling();
+}
+
 
 const scripts = [
   {
@@ -293,25 +299,11 @@ function createWidget(checkintitle, checkinMsg, todayUsed, usedData, restData) {
   const emoji = w.addText(`🪐`);
   emoji.textSize = 30;
 
-  const top1Line = w.addText(checkintitle);
-  top1Line.applyHeadlineTextStyling();
-  top1Line.textColor = textcolor;
-
-  const top2Line = w.addText(checkinMsg);
-  top2Line.textSize = 12;
-  top2Line.textColor = textcolor;
-
-  const top3Line = w.addText(todayUsed);
-  top3Line.textSize = 12;
-  top3Line.textColor = textcolor;
-
-  const top4Line = w.addText(usedData);
-  top4Line.textSize = 12;
-  top4Line.textColor = textcolor;
-
-  const top5Line = w.addText(restData);
-  top5Line.textSize = 12;
-  top5Line.textColor = textcolor;
+  addTitleTextToListWidget(checkintitle, w)
+  addTextToListWidget(checkinMsg, w);
+  addTextToListWidget(todayUsed, w);
+  addTextToListWidget(usedData, w);
+  addTextToListWidget(restData, w);
 
   w.presentSmall();
   return w;
