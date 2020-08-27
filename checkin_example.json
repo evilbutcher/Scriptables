@@ -1,14 +1,20 @@
 {
   "c1": {
-    "title": "name",
-    "url": "https://your.loginurl.com/auth/login",
-    "email": "example@email.com",
-    "password": "password"
+    "title": "extrmcloud",
+    "url": "https://extrmcloud.com/auth/login",
+    "email": "994409011@qq.com",
+    "password": "19860513"
   },
   "c2": {
-    "title": "name",
-    "url": "https://your.loginurl.com/auth/login",
-    "email": "example@email.com",
-    "password": "password"
-  }
+    "title": "迅云",
+    "url": "https://xunyun.us/auth/login",
+    "email": "994409011@qq.com",
+    "password": "19860513"
+  },
+  "c3": {
+    "title": "ikuuu",
+    "url": "https://ikuuu.co/auth/login",
+    "email": "994409011@qq.com",
+    "password": "19860513"
+  },
 }
