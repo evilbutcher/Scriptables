@@ -232,8 +232,8 @@ async function dataResults(url, checkinMsg, title) {
           let usedData = flowData[0];
           let todatUsed = flowData[1];
           let restData = flowData[2];
-          $.todayUsed = `今日已用：${flowData[0]}`;
-          $.usedData = `累计使用：${flowData[1]}`;
+          $.todayUsed = `今日已用：${flowData[1]}`;
+          $.usedData = `累计使用：${flowData[0]}`;
           $.restData = `剩余流量：${flowData[2]}`;
           result.push(
             `今日：${todatUsed}\n已用：${usedData}\n剩余：${restData}`
