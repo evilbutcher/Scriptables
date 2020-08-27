@@ -1,13 +1,15 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
-// icon-color: purple; icon-glyph: plane;
+// icon-color: purple; icon-glyph: plane-departure;
 /*
  * Author: evilbutcher Neurogram
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
+ * 感谢@MuTu88帮忙测试！
  * 自动更新打开后会运行覆盖脚本内已有修改，两种解决方案
  * 一、打开自动更新，配置Config文件，请参考https://github.com/evilbutcher/Scriptables/blob/master/Config.js，下载后导入Scriptable，脚本运行会优先调取Config文件中信息。
  * 二、脚本内配置，关闭自动更新。
+ * 脚本运行后，会在iCloud/Scriptable文件夹内写入一个recordcheckintime.txt，用于记录签到时间，脚本逻辑每天签到一次。
  */
 const goupdate = false; //默认打开，便于维护
 const $ = importModule("Env");
@@ -28,8 +30,19 @@ $.autoLogout = false;
 !(async () => {
   init();
   getinfo();
-  launch();
-  let widget = createWidget($.checkintitle, $.checkinMsg, $.flowMsg);
+  await launch();
+  log($.checkintitle)
+  log($.checkinMsg)
+  log($.todayUsed)
+  log($.usedData)
+  log($.restData)
+  let widget = createWidget(
+    $.checkintitle,
+    $.checkinMsg,
+    $.todayUsed,
+    $.usedData,
+    $.restData
+  );
   Script.setWidget(widget);
   Script.complete();
 })()
@@ -66,23 +79,23 @@ function getinfo() {
 function init() {
   $.nowtime = new Date().getTime();
   log($.nowtime);
-  if ($.isFileExists("sbsdata/recordcheckintime.txt") == true) {
-    var recordtime = $.read("sbsdata/recordcheckintime.txt");
+  if ($.isFileExists("recordcheckintime.txt") == true) {
+    var recordtime = $.read("recordcheckintime.txt");
     log(recordtime);
     if ($.nowtime - recordtime > 86400000) {
       $.cancheckin = true;
-      $.write("sbsdata/recordcheckintime.txt", JSON.stringify($.nowtime));
+      $.write("recordcheckintime.txt", JSON.stringify($.nowtime));
     } else {
       $.cancheckin = false;
     }
   } else {
-    $.write("sbsdata/recordcheckintime.txt", JSON.stringify($.nowtime));
+    $.write("recordcheckintime.txt", JSON.stringify($.nowtime));
     log("初始时间已写入");
     $.cancheckin = true;
   }
 }
 
-function launch() {
+async function launch() {
   let title = $.checkintitle;
   let url = $.checkinloginurl;
   let email = $.checkinemail;
@@ -99,14 +112,14 @@ function launch() {
     });
   } else {
     if ($.cancheckin == true) {
-      checkin(url, email, password, title);
+      await checkin(url, email, password, title);
     } else {
-      dataResults(url, "今日已签到", title);
+      await dataResults(url, "今日已签到", title);
     }
   }
 }
 
-function login(url, email, password, title) {
+async function login(url, email, password, title) {
   let loginPath =
     url.indexOf("auth/login") != -1 ? "auth/login" : "user/_login.php";
   let table = {
@@ -116,7 +129,7 @@ function login(url, email, password, title) {
       `?email=${email}&passwd=${password}&rumber-me=week`,
   };
   log(table);
-  $.post(table, (response, data) => {
+  $.post(table, async (response, data) => {
     if (
       JSON.parse(data).msg.match(
         /邮箱不存在|邮箱或者密码错误|Mail or password is incorrect/
@@ -125,37 +138,37 @@ function login(url, email, password, title) {
       $.msg(title + "邮箱或者密码错误");
     } else {
       if ($.cancheckin == true) {
-        checkin(url, email, password, title);
+        await checkin(url, email, password, title);
       } else {
-        dataResults(url, "今日已签到", title);
+        await dataResults(url, "今日已签到", title);
       }
     }
   });
 }
 
-function checkin(url, email, password, title) {
+async function checkin(url, email, password, title) {
   let checkinPath =
     url.indexOf("auth/login") != -1 ? "user/checkin" : "user/_checkin.php";
   var checkinreqest = {
     url: url.replace(/(auth|user)\/login(.php)*/g, "") + checkinPath,
   };
   log(checkinreqest);
-  $.post(checkinreqest, (response, data) => {
+  $.post(checkinreqest, async (response, data) => {
     if (data.match(/\"msg\"\:/)) {
-      dataResults(url, JSON.parse(data).msg, title);
+      await dataResults(url, JSON.parse(data).msg, title);
     } else {
-      login(url, email, password, title);
+      await login(url, email, password, title);
     }
   });
 }
 
-function dataResults(url, checkinMsg, title) {
+async function dataResults(url, checkinMsg, title) {
   let userPath = url.indexOf("auth/login") != -1 ? "user" : "user/index.php";
   var datarequest = {
     url: url.replace(/(auth|user)\/login(.php)*/g, "") + userPath,
   };
   log(datarequest);
-  $.getStr(datarequest, (response, data) => {
+  await $.getStr(datarequest, (response, data) => {
     let resultData = "";
     let result = [];
     if (data.match(/theme\/malio/)) {
@@ -185,6 +198,7 @@ function dataResults(url, checkinMsg, title) {
       if (todayUsed) {
         todayUsed = flowFormat(todayUsed[0]);
         result.push(`今日：${todayUsed}`);
+        $.todayUsed = `今日已用：${todayUsed}`;
       }
       let usedData = data.match(
         /(Used Transfer|>过去已用|>已用|>总已用|\"已用)[^B]+/
@@ -192,6 +206,7 @@ function dataResults(url, checkinMsg, title) {
       if (usedData) {
         usedData = flowFormat(usedData[0]);
         result.push(`已用：${usedData}`);
+        $.usedData = `累计使用：${usedData}`;
       }
       let restData = data.match(
         /(Remaining Transfer|>剩余流量|>流量剩余|>可用|\"剩余)[^B]+/
@@ -199,6 +214,7 @@ function dataResults(url, checkinMsg, title) {
       if (restData) {
         restData = flowFormat(restData[0]);
         result.push(`剩余：${restData}`);
+        $.restData = `剩余流量：${restData}`;
       }
       if (result.length != 0) {
         resultData = result.join("\n");
@@ -206,7 +222,6 @@ function dataResults(url, checkinMsg, title) {
     }
     let flowMsg = resultData == "" ? "流量信息获取失败" : resultData;
     $.checkinMsg = checkinMsg;
-    $.flowMsg = flowMsg;
     log(title + "\n" + checkinMsg + "\n" + flowMsg);
   });
 }
@@ -217,7 +232,7 @@ function flowFormat(data) {
   return flow[0] + "B";
 }
 
-function createWidget(checkintitle, checkinMsg, flowMsg) {
+function createWidget(checkintitle, checkinMsg, todayUsed, usedData, restData) {
   const w = new ListWidget();
   const bgColor = new LinearGradient();
   bgColor.colors = [new Color("#a18cd1"), new Color("#fbc2eb")];
@@ -226,7 +241,7 @@ function createWidget(checkintitle, checkinMsg, flowMsg) {
   w.centerAlignContent();
 
   const emoji = w.addText(`🛩`);
-  emoji.textSize = 30;
+  emoji.textSize = 37;
 
   const top1Line = w.addText(checkintitle);
   top1Line.textSize = 12;
@@ -236,11 +251,19 @@ function createWidget(checkintitle, checkinMsg, flowMsg) {
   top2Line.textSize = 12;
   top2Line.textColor = Color.black();
 
-  const top3Line = w.addText(flowMsg);
+  const top3Line = w.addText(todayUsed);
   top3Line.textSize = 12;
   top3Line.textColor = Color.black();
 
-  w.presentMedium();
+  const top4Line = w.addText(usedData);
+  top4Line.textSize = 12;
+  top4Line.textColor = Color.black();
+
+  const top5Line = w.addText(restData);
+  top5Line.textSize = 12;
+  top5Line.textColor = Color.black();
+
+  w.presentSmall();
   return w;
 }
 
