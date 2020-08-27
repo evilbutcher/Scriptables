@@ -11,10 +11,11 @@
  */
 const goupdate = false; //默认打开，便于维护
 const $ = importModule("Env");
-var checkintitle = ""; //填写标题
-var checkinloginurl = ""; //填写登陆链接
-var checkinemail = ""; //填写邮箱
-var checkinpwd = ""; //填写密码
+var checkintitle = ""; //填写签到标题
+var checkinloginurl = ""; //填写签到登陆链接
+var checkinemail = ""; //填写签到邮箱
+var checkinpwd = ""; //填写签到密码
+
 const scripts = [
   {
     moduleName: "Checkin",
@@ -26,12 +27,11 @@ $.autoLogout = false;
 
 !(async () => {
   init();
-  if (getinfo() == true) {
-    launch();
-    let widget = createWidget($.checkintitle, $.checkinMsg, $.flowMsg);
-    Script.setWidget(widget);
-    Script.complete();
-  }
+  getinfo();
+  launch();
+  let widget = createWidget($.checkintitle, $.checkinMsg, $.flowMsg);
+  Script.setWidget(widget);
+  Script.complete();
 })()
   .catch((err) => {
     $.msg("Checkin运行出现错误❌\n" + err);
@@ -52,6 +52,14 @@ function getinfo() {
     $.checkinemail = checkinemail;
     $.checkinpwd = checkinpwd;
     log("将使用脚本内签到信息");
+    if (
+      $.checkintitle == "" ||
+      $.checkinloginurl == "" ||
+      $.checkinemail == "" ||
+      $.checkinpwd == ""
+    ) {
+      $.msg("请检查填入的签到信息是否完整");
+    }
   }
 }
 
