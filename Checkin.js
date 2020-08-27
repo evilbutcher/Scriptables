@@ -108,19 +108,18 @@ async function launch() {
       url: url.replace(/(auth|user)\/login(.php)*/g, "") + logoutPath,
     };
     log(logouturl);
-    await $.getStr(logouturl, async (response, data) => {
-      await login(url, email, password, title);
-      if ($.loginok == true) {
-        if ($.cancheckin == true) {
-          await checkin(url, email, password, title);
-          if ($.checkinok == true) {
-            await dataResults(url, $.checkindatamsg, title);
-          }
-        } else {
-          await dataResults(url, "今日已签到", title);
+    await $.getStr(logouturl);
+    await login(url, email, password, title);
+    if ($.loginok == true) {
+      if ($.cancheckin == true) {
+        await checkin(url, email, password, title);
+        if ($.checkinok == true) {
+          await dataResults(url, $.checkindatamsg, title);
         }
+      } else {
+        await dataResults(url, "今日已签到", title);
       }
-    });
+    }
   } else {
     if ($.cancheckin == true) {
       await checkin(url, email, password, title);
@@ -138,7 +137,6 @@ async function launch() {
       if ($.getdata == false) {
         await login(url, email, password, title);
         if ($.loginok == true) {
-          log("loginok=true");
           await dataResults(url, "今日已签到", title);
         }
       }
