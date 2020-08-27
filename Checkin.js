@@ -11,8 +11,10 @@
  * 二、脚本内配置，关闭自动更新。
  * 脚本运行后，会在iCloud/Scriptable文件夹内写入一个recordcheckintime.txt，用于记录签到时间，脚本逻辑每天签到一次。
  */
-const goupdate = false; //默认打开，便于维护
+const goupdate = false; //默认关闭，需要时打开，更新后会覆盖脚本已有的签到信息
 const $ = importModule("Env");
+$.autoLogout = true;
+
 var checkintitle = ""; //填写签到标题
 var checkinloginurl = ""; //填写签到登陆链接
 var checkinemail = ""; //填写签到邮箱
@@ -25,17 +27,16 @@ const scripts = [
       "https://raw.githubusercontent.com/evilbutcher/Scriptables/master/Checkin.js",
   },
 ];
-$.autoLogout = false;
 
 !(async () => {
   init();
   getinfo();
   await launch();
-  log($.checkintitle)
-  log($.checkinMsg)
-  log($.todayUsed)
-  log($.usedData)
-  log($.restData)
+  log($.checkintitle);
+  log($.checkinMsg);
+  log($.todayUsed);
+  log($.usedData);
+  log($.restData);
   let widget = createWidget(
     $.checkintitle,
     $.checkinMsg,
@@ -107,14 +108,40 @@ async function launch() {
       url: url.replace(/(auth|user)\/login(.php)*/g, "") + logoutPath,
     };
     log(logouturl);
-    $.getStr(logouturl, (response, data) => {
-      login(url, email, password, title);
+    await $.getStr(logouturl, async (response, data) => {
+      await login(url, email, password, title);
+      if ($.loginok == true) {
+        if ($.cancheckin == true) {
+          await checkin(url, email, password, title);
+          if ($.checkinok == true) {
+            await dataResults(url, $.checkindatamsg, title);
+          }
+        } else {
+          await dataResults(url, "今日已签到", title);
+        }
+      }
     });
   } else {
     if ($.cancheckin == true) {
       await checkin(url, email, password, title);
+      if ($.checkinok == true) {
+        await dataResults(url, $.checkindatamsg, title);
+      } else {
+        await login(url, email, password, title);
+        if ($.loginok == true) {
+          await checkin(url, email, password, title);
+          await dataResults(url, "今日已签到", title);
+        }
+      }
     } else {
       await dataResults(url, "今日已签到", title);
+      if ($.getdata == false) {
+        await login(url, email, password, title);
+        if ($.loginok == true) {
+          log("loginok=true");
+          await dataResults(url, "今日已签到", title);
+        }
+      }
     }
   }
 }
@@ -129,19 +156,18 @@ async function login(url, email, password, title) {
       `?email=${email}&passwd=${password}&rumber-me=week`,
   };
   log(table);
-  $.post(table, async (response, data) => {
+  await $.post(table, async (response, data) => {
     if (
       JSON.parse(data).msg.match(
         /邮箱不存在|邮箱或者密码错误|Mail or password is incorrect/
       )
     ) {
       $.msg(title + "邮箱或者密码错误");
+      $.loginok = false;
+      log("登陆失败");
     } else {
-      if ($.cancheckin == true) {
-        await checkin(url, email, password, title);
-      } else {
-        await dataResults(url, "今日已签到", title);
-      }
+      $.loginok = true;
+      log("登陆成功");
     }
   });
 }
@@ -153,11 +179,14 @@ async function checkin(url, email, password, title) {
     url: url.replace(/(auth|user)\/login(.php)*/g, "") + checkinPath,
   };
   log(checkinreqest);
-  $.post(checkinreqest, async (response, data) => {
+  await $.post(checkinreqest, async (response, data) => {
     if (data.match(/\"msg\"\:/)) {
-      await dataResults(url, JSON.parse(data).msg, title);
+      $.checkinok = true;
+      $.checkindatamsg = JSON.parse(data).msg;
+      log("签到成功");
     } else {
-      await login(url, email, password, title);
+      $.checkinok = false;
+      log("签到失败");
     }
   });
 }
@@ -168,61 +197,76 @@ async function dataResults(url, checkinMsg, title) {
     url: url.replace(/(auth|user)\/login(.php)*/g, "") + userPath,
   };
   log(datarequest);
-  await $.getStr(datarequest, (response, data) => {
-    let resultData = "";
-    let result = [];
-    if (data.match(/theme\/malio/)) {
-      let flowInfo = data.match(/trafficDountChat\s*\(([^\)]+)/);
-      if (flowInfo) {
-        let flowData = flowInfo[1].match(/\d[^\']+/g);
-        let usedData = flowData[0];
-        let todatUsed = flowData[1];
-        let restData = flowData[2];
-        result.push(`今日：${todatUsed}\n已用：${usedData}\n剩余：${restData}`);
-      }
-      let userInfo = data.match(/ChatraIntegration\s*=\s*({[^}]+)/);
-      if (userInfo) {
-        let user_name = userInfo[1].match(/name.+'(.+)'/)[1];
-        let user_class = userInfo[1].match(/Class.+'(.+)'/)[1];
-        let class_expire = userInfo[1].match(/Class_Expire.+'(.+)'/)[1];
-        let money = userInfo[1].match(/Money.+'(.+)'/)[1];
-        result.push(
-          `用户名：${user_name}\n用户等级：lv${user_class}\n余额：${money}\n到期时间：${class_expire}`
-        );
-      }
-      if (result.length != 0) {
-        resultData = result.join("\n\n");
-      }
+  await $.getStr(datarequest, async (response, data) => {
+    if (data.match(/login|请填写邮箱|登陆/)) {
+      $.getdata = false;
     } else {
-      let todayUsed = data.match(/>*\s*今日(已用|使用)*[^B]+/);
-      if (todayUsed) {
-        todayUsed = flowFormat(todayUsed[0]);
-        result.push(`今日：${todayUsed}`);
-        $.todayUsed = `今日已用：${todayUsed}`;
-      }
-      let usedData = data.match(
-        /(Used Transfer|>过去已用|>已用|>总已用|\"已用)[^B]+/
-      );
-      if (usedData) {
-        usedData = flowFormat(usedData[0]);
-        result.push(`已用：${usedData}`);
-        $.usedData = `累计使用：${usedData}`;
-      }
-      let restData = data.match(
-        /(Remaining Transfer|>剩余流量|>流量剩余|>可用|\"剩余)[^B]+/
-      );
-      if (restData) {
-        restData = flowFormat(restData[0]);
-        result.push(`剩余：${restData}`);
-        $.restData = `剩余流量：${restData}`;
-      }
-      if (result.length != 0) {
+      let resultData = "";
+      let result = [];
+      if (data.match(/theme\/malio/)) {
+        let flowInfo = data.match(/trafficDountChat\s*\(([^\)]+)/);
+        if (flowInfo) {
+          let flowData = flowInfo[1].match(/\d[^\']+/g);
+          let usedData = flowData[0];
+          let todatUsed = flowData[1];
+          let restData = flowData[2];
+          $.todayUsed = `今日已用：${flowData[0]}`;
+          $.usedData = `累计使用：${flowData[1]}`;
+          $.restData = `剩余流量：${flowData[2]}`;
+          result.push(
+            `今日：${todatUsed}\n已用：${usedData}\n剩余：${restData}`
+          );
+        }
+        let userInfo = data.match(/ChatraIntegration\s*=\s*({[^}]+)/);
+        if (userInfo) {
+          let user_name = userInfo[1].match(/name.+'(.+)'/)[1];
+          let user_class = userInfo[1].match(/Class.+'(.+)'/)[1];
+          let class_expire = userInfo[1].match(/Class_Expire.+'(.+)'/)[1];
+          let money = userInfo[1].match(/Money.+'(.+)'/)[1];
+          result.push(
+            `用户名：${user_name}\n用户等级：lv${user_class}\n余额：${money}\n到期时间：${class_expire}`
+          );
+        }
+        if (result.length != 0) {
+          resultData = result.join("\n\n");
+        }
+      } else {
+        let todayUsed = data.match(/>*\s*今日(已用|使用)*[^B]+/);
+        if (todayUsed) {
+          todayUsed = flowFormat(todayUsed[0]);
+          result.push(`今日：${todayUsed}`);
+          $.todayUsed = `今日已用：${todayUsed}`;
+        } else {
+          $.todayUsed = `今日已用获取失败`;
+          result.push(`今日已用获取失败`);
+        }
+        let usedData = data.match(
+          /(Used Transfer|>过去已用|>已用|>总已用|\"已用)[^B]+/
+        );
+        if (usedData) {
+          usedData = flowFormat(usedData[0]);
+          result.push(`已用：${usedData}`);
+          $.usedData = `累计使用：${usedData}`;
+        } else {
+          $.usedData = `累计使用获取失败`;
+          result.push(`累计使用获取失败`);
+        }
+        let restData = data.match(
+          /(Remaining Transfer|>剩余流量|>流量剩余|>可用|\"剩余)[^B]+/
+        );
+        if (restData) {
+          restData = flowFormat(restData[0]);
+          result.push(`剩余：${restData}`);
+          $.restData = `剩余流量：${restData}`;
+        } else {
+          $.restData = `剩余流量获取失败`;
+          result.push(`剩余流量获取失败`);
+        }
         resultData = result.join("\n");
       }
+      $.checkinMsg = checkinMsg;
+      log(title + "\n" + checkinMsg + "\n" + resultData);
     }
-    let flowMsg = resultData == "" ? "流量信息获取失败" : resultData;
-    $.checkinMsg = checkinMsg;
-    log(title + "\n" + checkinMsg + "\n" + flowMsg);
   });
 }
 
@@ -240,11 +284,11 @@ function createWidget(checkintitle, checkinMsg, todayUsed, usedData, restData) {
   w.backgroundGradient = bgColor;
   w.centerAlignContent();
 
-  const emoji = w.addText(`🛩`);
-  emoji.textSize = 37;
+  const emoji = w.addText(`☄️`);
+  emoji.textSize = 30;
 
   const top1Line = w.addText(checkintitle);
-  top1Line.textSize = 12;
+  top1Line.applyHeadlineTextStyling();
   top1Line.textColor = Color.black();
 
   const top2Line = w.addText(checkinMsg);
