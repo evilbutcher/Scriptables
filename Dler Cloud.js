@@ -48,7 +48,7 @@ const scripts = [
   {
     moduleName: "Checkin",
     url:
-      "https://raw.githubusercontent.com/evilbutcher/Scriptables/master/Checkin.js",
+      "https://raw.githubusercontent.com/evilbutcher/Scriptables/master/Dler%20Cloud.js",
   },
 ];
 

@@ -19,6 +19,7 @@ RSS监控[地址](https://github.com/evilbutcher/Scriptables/blob/master/RSSMoni
 知乎热榜[地址](https://github.com/evilbutcher/Scriptables/blob/master/ZhihuMonitor.js)  
 NASA精简[地址](https://github.com/evilbutcher/Scriptables/blob/master/NASA.js)
 NASA丰富[地址](https://github.com/evilbutcher/Scriptables/blob/master/NASAwDetail.js)  
-签到[地址](https://github.com/evilbutcher/Scriptables/blob/master/Checkin.js)
+通用签到[地址](https://github.com/evilbutcher/Scriptables/blob/master/Checkin.js)
+洞签到[地址](https://github.com/evilbutcher/Scriptables/master/Dler%20Cloud.js)  
 #### 自定义配置效果
 ![config](https://github.com/evilbutcher/Scriptables/blob/master/picture/config.gif)
