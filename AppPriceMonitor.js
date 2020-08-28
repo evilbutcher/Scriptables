@@ -74,7 +74,7 @@ function createWidget(notifys) {
     addTextToListWidget(notifys[i], w);
   }
 
-  w.presentSmall();
+  w.presentLarge();
   return w;
 }
 
@@ -160,7 +160,10 @@ async function post_data(d) {
                   }
                 } else {
                   notifys.push(
-                    `${flag(k)} ${x.trackName} 🧩版本【${x.version}】/💰价格【${x.formattedPrice}】`
+                    `${flag(k)} ${x.trackName}`
+                  );
+                  notifys.push(
+                    `🧩版本【${x.version}】/💰价格【${x.formattedPrice}】`
                   );
                 }
               });
