@@ -21,5 +21,6 @@ NASA精简[地址](https://github.com/evilbutcher/Scriptables/blob/master/NASA.j
 NASA丰富[地址](https://github.com/evilbutcher/Scriptables/blob/master/NASAwDetail.js)  
 通用签到[地址](https://github.com/evilbutcher/Scriptables/blob/master/Checkin.js)
 洞签到[地址](https://github.com/evilbutcher/Scriptables/master/Dler%20Cloud.js)  
+App价格及版本监控[地址](https://github.com/evilbutcher/Scriptables/blob/master/AppPriceMonitor.js)
 #### 自定义配置效果
 ![config](https://github.com/evilbutcher/Scriptables/blob/master/picture/config.gif)
