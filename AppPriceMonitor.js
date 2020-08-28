@@ -160,10 +160,7 @@ async function post_data(d) {
                   }
                 } else {
                   notifys.push(
-                    `${flag(k)}🧩${x.trackName}:版本【${x.version}】`
-                  );
-                  notifys.push(
-                    `${flag(k)}💰${x.trackName}:价格【${x.formattedPrice}】`
+                    `${flag(k)} ${x.trackName} 🧩版本【${x.version}】/💰价格【${x.formattedPrice}】`
                   );
                 }
               });
