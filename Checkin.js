@@ -83,6 +83,15 @@ function getinfo() {
     $.checkinloginurl = con.checkinloginurl();
     $.checkinemail = con.checkinemail();
     $.checkinpwd = con.checkinpwd();
+    if (
+      $.checkintitle == "" ||
+      $.checkinloginurl == "" ||
+      $.checkinemail == "" ||
+      $.checkinpwd == ""
+    ) {
+      log("配置文件内签到信息不完整");
+      throw new Error(err)
+    }
     log("将使用配置文件内签到信息");
   } catch (err) {
     $.checkintitle = checkintitle;
