@@ -22,12 +22,12 @@ NASA精简 [地址](https://github.com/evilbutcher/Scriptables/blob/master/NASA.
 App价格及版本监控 [地址](https://github.com/evilbutcher/Scriptables/blob/master/AppPriceMonitor.js)  
 #### 脚本效果演示
 ##### App价格监控演示图片  
-![App价格版本监控](https://raw.githubusercontent.com/evilbutcher/Scriptables/master/picture/apppricemonitor.jpeg){:height="200" width="200"}
+<img src="https://raw.githubusercontent.com/evilbutcher/Scriptables/master/picture/apppricemonitor.jpeg" height="30%" width="30%">
 ##### 热门监控演示图片  
-![热门监控](https://raw.githubusercontent.com/evilbutcher/Scriptables/master/picture/hotlistmonitor.jpeg){:height="200" width="200"}
+<img src="https://raw.githubusercontent.com/evilbutcher/Scriptables/master/picture/hotlistmonitor.jpeg" height="30%" width="30%">
 ##### NASA每日一图和RSS监控演示图片  
-![NASA和RSS](https://raw.githubusercontent.com/evilbutcher/Scriptables/master/picture/nasaandmonitor.jpeg){:height="200" width="200"}
+<img src="https://raw.githubusercontent.com/evilbutcher/Scriptables/master/picture/nasaandmonitor.jpeg" height="30%" width="30%">
 
 #### 自定义配置效果演示
 脚本运行优先使用Config文件内的设置，配置Config文件后，这样可以保证每次更新，即使脚本内设置被更新覆盖，也不会影响使用。
-![config](https://github.com/evilbutcher/Scriptables/blob/master/picture/config.gif)
+<img src="https://github.com/evilbutcher/Scriptables/blob/master/picture/config.gif" height="30%" width="30%">
