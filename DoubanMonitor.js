@@ -37,7 +37,7 @@ function createWidget(res) {
     } else {
       star = rating["star_count"];
     }
-    var item = title + "  " + star + "";
+    var item = title + "  " + star + "✨";
     items.push(item);
   }
   console.log(items);
