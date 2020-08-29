@@ -1,15 +1,17 @@
+[![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=evilbutcher)](https://github.com/anuraghazra/github-readme-stats)
+
 # Scriptable 脚本整理
-本仓库【Scriptables】用于我自己使用、编写和测试软件Scriptable脚本代码等。  
-【[Scriptable](https://github.com/evilbutcher/Scriptable)】用于与【[GideonSenku's Scriptable](https://github.com/GideonSenku/Scriptable)】不定期同步，具体使用文档和脚本使用方法请前往@GideonSenku仓库的README.md。  
+本仓库用于我自己使用、编写和测试软件Scriptable脚本代码等。
+
+文档和脚本使用方法请前往@GideonSenku仓库【[Scriptable](https://github.com/GideonSenku/Scriptable)】的README.md。  
 #### 需要注意的是，我暂时还没升级iOS 14，所以代码可能存在问题，欢迎反馈。
 ## 致谢
-感谢@GideonSenku的Env
-感谢@MuTu88帮忙测试
+感谢@GideonSenku的Env 感谢@MuTu88帮忙测试
 ## 因Scriptable目前还未上线商店版，以下脚本均为demo测试。 
 ### 如何安装？
-下载.js文件后直接导入Scriptable即可。  
-全部脚本都需要Env，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Env.js)安装。  
-如果想要保持自动更新，又想要自定义脚本内设置，需要使用Config，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Config.js)安装。  
+全部脚本都需要Env，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Env.js)下载安装Env.js。  
+下载想要使用的.js文件后，直接导入Scriptable即可。也可使用Install Scripts一键安装所有脚本，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Install%20Scripts.js)下载安装Install Scripts.js。
+如果想要保持自动更新，又想要自定义脚本内设置，需要使用Config，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Config.js)下载安装Config.js。  
 ### 脚本JS安装
 B站榜单 [下载地址](https://github.com/evilbutcher/Scriptables/blob/master/BilibiliMonitor.js)  
 豆瓣电影监控 [下载地址](https://github.com/evilbutcher/Scriptables/blob/master/DoubanMonitor.js)  
