@@ -1,7 +1,7 @@
 [![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=evilbutcher)](https://github.com/anuraghazra/github-readme-stats)
 
 # Scriptable 脚本整理
-Scriptable scripts collation  
+Scriptable Scripts Collations  
 文档和脚本使用方法请前往@GideonSenku仓库【[Scriptable](https://github.com/GideonSenku/Scriptable)】的README.md。  
 Documentation and scripts instructions can be found in @GideonSenku [Scriptable](https://github.com/GideonSenku/Scriptable) README.md.  
 #### 需要注意的是，我暂时还没升级iOS 14，所以代码可能存在问题，欢迎反馈。
@@ -20,7 +20,8 @@ Env is required for all scripts, click [here](https://github.com/evilbutcher/Scr
 After downloading the .js file you want to use, you can just import to Scriptable directly. You can also use Install Scripts to install all the scripts in one click, click [here](https://github.com/evilbutcher/Scriptables/blob/master/Install%20Scripts.js) to download and install Install Scripts.js.  
 如果想要保持自动更新，又想要自定义脚本内设置，需要使用Config，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Config.js)下载安装Config.js。  
 If you want to keep it updated automatically and want to customize the settings within the script, you need to use Config. Click [here](https://github.com/evilbutcher/Scriptables/blob/master/Config.js) to download and install Config.js.  
-### 脚本JS安装
+### 脚本安装
+Script Installation  
 B站榜单 [下载地址](https://github.com/evilbutcher/Scriptables/blob/master/BilibiliMonitor.js)  
 Bilibili Monitor [Download](https://github.com/evilbutcher/Scriptables/blob/master/BilibiliMonitor.js)  
   
