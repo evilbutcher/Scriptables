@@ -43,7 +43,7 @@ function createWidget(res) {
     w.backgroundGradient = bgColor;
     w.centerAlignContent();
 
-    const firstLine = w.addText(`[📣]微博热搜`);
+    const firstLine = w.addText(`🔥微博热搜`);
     firstLine.textSize = 15;
     firstLine.textColor = Color.white();
     firstLine.textOpacity = 0.7;

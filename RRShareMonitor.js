@@ -41,7 +41,7 @@ function createWidget(res) {
   w.backgroundGradient = bgColor;
   w.centerAlignContent();
 
-  const firstLine = w.addText(`[📣]人人影视`);
+  const firstLine = w.addText(`🎬人人影视`);
   firstLine.textSize = 15;
   firstLine.textColor = Color.white();
   firstLine.textOpacity = 0.7;

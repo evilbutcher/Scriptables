@@ -37,7 +37,7 @@ function createWidget(res) {
     } else {
       star = rating["star_count"];
     }
-    var item = title + "  " + star + "🌟";
+    var item = title + "  " + star + "";
     items.push(item);
   }
   console.log(items);
@@ -49,7 +49,7 @@ function createWidget(res) {
   w.backgroundGradient = bgColor;
   w.centerAlignContent();
 
-  const firstLine = w.addText(`[📣]豆瓣电影`);
+  const firstLine = w.addText(`🎞豆瓣电影`);
   firstLine.textSize = 15;
   firstLine.textColor = Color.white();
   firstLine.textOpacity = 0.7;
