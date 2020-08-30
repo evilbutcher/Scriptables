@@ -67,3 +67,6 @@ Using Custom Configuration Demo
 配置Config文件后，脚本运行优先使用Config文件内的设置，这样可以保证每次更新不会影响自定义设置。  
 Once the Config file is configured, the script runs prioritizing the settings within the Config file, so that each update does not affect the custom settings.   
 <img src="https://github.com/evilbutcher/Scriptables/blob/master/picture/config.gif" height="30%" width="30%">  
+
+### 访问量
+![](http://profile-counter.glitch.me/evilbutcher/count.svg)
