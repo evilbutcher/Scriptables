@@ -67,7 +67,7 @@ const scripts = [
 function createWidget(notifys) {
   const w = new ListWidget();
   w.backgroundGradient = bgColor;
-  w.centerAlignContent();
+  w.addSpacer(3);
 
   addTitleTextToListWidget("App价格版本监控", w);
   for (var i = 0; i < notifys.length; i++) {

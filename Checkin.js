@@ -310,7 +310,7 @@ function flowFormat(data) {
 function createWidget(checkintitle, checkinMsg, todayUsed, usedData, restData) {
   const w = new ListWidget();
   w.backgroundGradient = bgColor;
-  w.centerAlignContent();
+  w.addSpacer(3);
 
   const emoji = w.addText(`🪐`);
   emoji.textSize = 30;

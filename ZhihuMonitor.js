@@ -41,7 +41,7 @@ function createWidget(res) {
     bgColor.colors = [new Color("#1c1c1c"), new Color("#29323c")];
     bgColor.locations = [0.0, 1.0];
     w.backgroundGradient = bgColor;
-    w.centerAlignContent();
+    w.addSpacer(3);
 
     const firstLine = w.addText(`📖知乎热榜`);
     firstLine.textSize = 15;
