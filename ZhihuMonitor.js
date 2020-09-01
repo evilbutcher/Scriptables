@@ -6,7 +6,7 @@
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  */
-const goupdate = false;
+const goupdate = true;
 const $ = importModule("Env");
 var num = 6; //自定义显示数量
 var rancolor = true; //true为开启随机颜色
