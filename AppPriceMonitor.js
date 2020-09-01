@@ -67,13 +67,16 @@ const scripts = [
 function createWidget(notifys) {
   const w = new ListWidget();
   w.backgroundGradient = bgColor;
-  w.addSpacer(3);
+  w.addSpacer();
+  w.spacing = 5;
 
   addTitleTextToListWidget("App价格版本监控", w);
   for (var i = 0; i < notifys.length; i++) {
     addTextToListWidget(notifys[i], w);
   }
 
+  w.addSpacer();
+  w.spacing = 5;
   w.presentLarge();
   return w;
 }
@@ -159,9 +162,7 @@ async function post_data(d) {
                     }
                   }
                 } else {
-                  notifys.push(
-                    `${flag(k)} ${x.trackName}`
-                  );
+                  notifys.push(`${flag(k)} ${x.trackName}`);
                   notifys.push(
                     `🧩版本【${x.version}】/💰价格【${x.formattedPrice}】`
                   );
