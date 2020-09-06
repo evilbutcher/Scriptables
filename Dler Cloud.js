@@ -242,7 +242,7 @@ async function dataResults(url, checkinMsg, title) {
           let todatUsed = flowData[1];
           let restData = flowData[2];
           $.todayUsed = `今日已用：${flowData[1]}`;
-          $.usedData = `累计使用：${flowData[0]}`;
+          $.usedData = `本月已用：${flowData[0]}`;
           $.restData = `剩余流量：${flowData[2]}`;
           result.push(
             `今日：${todatUsed}\n已用：${usedData}\n剩余：${restData}`
@@ -280,10 +280,10 @@ async function dataResults(url, checkinMsg, title) {
         if (usedData) {
           usedData = flowFormat(usedData[0]);
           result.push(`已用：${usedData}`);
-          $.usedData = `累计使用：${usedData}`;
+          $.usedData = `本月已用：${usedData}`;
         } else {
-          $.usedData = `累计使用获取失败`;
-          result.push(`累计使用获取失败`);
+          $.usedData = `本月已用获取失败`;
+          result.push(`本月已用获取失败`);
         }
         let restData = data.match(
           /(Remaining Transfer|>剩余流量|>流量剩余|>可用|\"剩余)[^B]+/
