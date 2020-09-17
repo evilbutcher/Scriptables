@@ -22,14 +22,9 @@ const scripts = [
   if (checkkey() == true) {
     await getinfo();
     if ($.headers.statusCode == 200) {
-      var title = $.data.title;
-      var copyright = $.data.copyright;
       var cover = $.data.url;
-      var detail = `🌃 ${title}\n©️ ${copyright}`;
     } else {
-      title = "随机展示";
       cover = $.imglink;
-      detail = `🌃 ${title}`;
     }
     try {
       var img = await new Request(cover).loadImage();
@@ -37,7 +32,7 @@ const scripts = [
       throw new ERR.ImageError("NASA提供的是视频/备用图片地址不支持");
     }
     //QuickLook.present(img);
-    let widget = createWidget(img, detail);
+    let widget = createWidget(img);
     Script.setWidget(widget);
     Script.complete();
   }
@@ -64,28 +59,22 @@ function checkkey() {
   }
 }
 
-function createWidget(img, detail) {
+function createWidget(img) {
   const w = new ListWidget();
   const bgColor = new LinearGradient();
   bgColor.colors = [new Color("#1c1c1c"), new Color("#29323c")];
   bgColor.locations = [0.0, 1.0];
   w.backgroundGradient = bgColor;
+  w.backgroundImage = img;
   w.addSpacer();
   w.spacing = 5;
 
   const imgLine = w.addImage(img);
-  imgLine.centerAlignImage();
-  imgLine.imageSize = new Size(330, 330);
-  imgLine.containerRelativeShape = true;
-
-  const top1Line = w.addText(detail);
-  top1Line.textSize = 15;
-  top1Line.leftAlignText();
-  top1Line.textColor = new Color("#7dbbae");
+  imgLine.imageSize = new Size(400, 400);
 
   w.addSpacer();
   w.spacing = 5;
-  w.presentMedium();
+  w.presentLarge();
   return w;
 }
 
