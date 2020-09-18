@@ -26,12 +26,7 @@ const scripts = [
     } else {
       cover = $.imglink;
     }
-    try {
-      var img = await new Request(cover).loadImage();
-    } catch (err) {
-      throw new ERR.ImageError("NASA提供的是视频/备用图片地址不支持");
-    }
-    //QuickLook.present(img);
+    var img = await new Request(cover).loadImage();
     let widget = createWidget(img);
     Script.setWidget(widget);
     Script.complete();
