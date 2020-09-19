@@ -107,13 +107,13 @@ function getinfo() {
         $.data = data;
         $.headers = resp;
         if (resp.statusCode == 404) {
-          throw new ERR.TimeError("❌ 暂无图片，内容在更新，请稍等呦～");
+          //throw new ERR.TimeError("❌ 暂无图片，内容在更新，请稍等呦～");
+          $.msg("NASA - 暂无图片" + err.message);
         }
       } catch (err) {
         if (err instanceof ERR.TimeError) {
           $.msg("NASA - 暂无图片" + err.message);
         }
-        return;
       }
       resolve();
     });
