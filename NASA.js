@@ -22,7 +22,14 @@ const scripts = [
   if (checkkey() == true) {
     await getinfo();
     if ($.headers.statusCode == 200) {
-      var cover = $.data.url;
+      var flag = Math.floor(Math.random() * Math.floor(3));
+      if (flag <= 1) {
+        log("展示备用图片");
+        cover = $.imglink;
+      } else {
+        log("展示NASA图片");
+        cover = $.data.url;
+      }
     } else {
       cover = $.imglink;
     }
@@ -35,8 +42,6 @@ const scripts = [
   .catch((err) => {
     if (err instanceof ERR.TokenError) {
       $.msg("NASA - Config配置错误❌\n" + err.message);
-    } else if (err instanceof ERR.ImageError) {
-      $.msg("NASA - 图片错误❌\n" + err.message);
     } else {
       $.msg("NASA - 出现错误❌\n" + JSON.stringify(err));
     }
@@ -103,17 +108,10 @@ function getinfo() {
   const url = `https://api.nasa.gov/planetary/apod?api_key=${$.apikey}`;
   return new Promise((resolve) => {
     const res = $.get({ url }, (resp, data) => {
-      try {
-        $.data = data;
-        $.headers = resp;
-        if (resp.statusCode == 404) {
-          //throw new ERR.TimeError("❌ 暂无图片，内容在更新，请稍等呦～");
-          $.msg("NASA - 暂无图片" + err.message);
-        }
-      } catch (err) {
-        if (err instanceof ERR.TimeError) {
-          $.msg("NASA - 暂无图片" + err.message);
-        }
+      $.data = data;
+      $.headers = resp;
+      if (resp.statusCode == 404) {
+        log("NASA - 暂无图片" + err.message);
       }
       resolve();
     });
