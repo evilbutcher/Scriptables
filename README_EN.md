@@ -2,15 +2,11 @@
 
 # Scriptable Scripts Collations
 
-Documentation and scripts instructions can be found in @GideonSenku [Scriptable](https://github.com/GideonSenku/Scriptable) README.md.
-
-#### It should be noted that I haven't upgraded iOS 14 yet, so there may be issues with the code, feedback is welcome!
+Documentation and scripts instructions can be found in @GideonSenku [Scriptable](https://github.com/GideonSenku/Scriptable) README.md. Feedback is welcome!
 
 ## Acknowledgements
 
 Thanks to @GideonSenku for the Env! Thanks to @MuTu88 for helping with testing!
-
-## Scriptable is not yet available on the App Store version, the following scripts are demo tests.
 
 ### How to install?
 

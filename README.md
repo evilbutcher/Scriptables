@@ -4,15 +4,11 @@
 
 #### [English Version](https://github.com/evilbutcher/Scriptables/blob/master/README_EN.md)
 
-文档和脚本使用方法请前往@GideonSenku 仓库【[Scriptable](https://github.com/GideonSenku/Scriptable)】的 README.md。
-
-#### 需要注意的是，我暂时还没升级 iOS 14，所以代码可能存在问题，欢迎反馈。
+文档和脚本使用方法请前往@GideonSenku 仓库【[Scriptable](https://github.com/GideonSenku/Scriptable)】的 README.md。欢迎使用反馈。
 
 ## 致谢
 
 感谢@GideonSenku 的 Env 感谢@MuTu88 帮忙测试
-
-## 因 Scriptable 目前还未上线商店版，以下脚本均为 demo 测试。
 
 ### 如何安装？
 
