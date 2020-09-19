@@ -23,11 +23,11 @@ module.exports = {
   zhnum: () => 6, //自定义知乎显示数量
   zhrancolor: () => true, //是否开启知乎随机颜色
   nasaapi: () => "", //填写NASA API Key
+  imglink: () => "http://api.dujin.org/bing/1366.php", //NASA备用图片地址，可自定义
   checkintitle: () => "", //填写签到标题
   checkinloginurl: () => "", //填写签到登陆链接
   checkinemail: () => "", //填写签到邮箱
   checkinpwd: () => "", //填写签到密码
-  imglink: () => "http://api.dujin.org/bing/1366.php", //NASA备用图片地址，可自定义
   apps: () => [
     "1443988620|hk",
     "1312014438 cn",
