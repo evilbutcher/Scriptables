@@ -21,17 +21,26 @@ const scripts = [
 !(async () => {
   if (checkkey() == true) {
     await getinfo();
+    var flag = Math.floor(Math.random() * 10);
     if ($.headers.statusCode == 200) {
-      var flag = Math.floor(Math.random() * Math.floor(3));
-      if (flag <= 1) {
-        log("展示备用图片");
+      if (flag >= 0 && flag < 2) {
+        log(`${flag} 展示备用图片1`);
         cover = $.imglink;
+      } else if (flag >= 2 && flag < 4) {
+        log(`${flag} 展示备用图片2`);
+        cover = $.imglink2;
       } else {
-        log("展示NASA图片");
+        log(`${flag} 展示NASA图片`);
         cover = $.data.url;
       }
     } else {
-      cover = $.imglink;
+      if (flag >= 0 && flag < 5) {
+        log(`${flag} 展示备用图片1`);
+        cover = $.imglink;
+      } else {
+        log(`${flag} 展示备用图片2`);
+        cover = $.imglink2;
+      }
     }
     var img = await new Request(cover).loadImage();
     let widget = createWidget(img);
@@ -50,9 +59,10 @@ const scripts = [
 
 function checkkey() {
   try {
-    const { nasaapi, imglink } = importModule("Config");
+    const { nasaapi, imglink, imglink2 } = importModule("Config");
     $.apikey = nasaapi();
     $.imglink = imglink();
+    $.imglink2 = imglink2();
     return true;
   } catch (err) {
     throw new ERR.TokenError("❌ 配置文件中未找到NASA API或备用图片地址");
