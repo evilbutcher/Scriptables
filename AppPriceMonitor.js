@@ -90,7 +90,11 @@ function addTextToListWidget(text, listWidget) {
 function addTitleTextToListWidget(text, listWidget) {
   let item = listWidget.addText(text);
   item.textColor = isDark ? Color.white() : Color.black();
-  item.applyHeadlineTextStyling();
+  try {
+    item.applyHeadlineTextStyling();
+  } catch(e) {
+    item.textSize = 18;
+  }
 }
 
 async function format_apps(x) {
