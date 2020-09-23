@@ -91,7 +91,7 @@ const scripts = [
   {
     moduleName: "北京尾号限行",
     url:
-      "https://raw.githubusercontent.com/evilbutcher/Scriptables/master/ZhihuMonitor.js",
+      "https://raw.githubusercontent.com/evilbutcher/Scriptables/master/%E5%8C%97%E4%BA%AC%E5%B0%BE%E5%8F%B7%E9%99%90%E8%A1%8C.js",
   },
 ];
 if (goupdate == true) update();
