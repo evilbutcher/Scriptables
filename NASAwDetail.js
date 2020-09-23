@@ -12,7 +12,7 @@ const $ = new importModule("Env");
 const ERR = MYERR();
 const scripts = [
   {
-    moduleName: "NASA",
+    moduleName: "NASAwDetail",
     url:
       "https://raw.githubusercontent.com/evilbutcher/Scriptables/master/NASAwDetail.js",
   },
