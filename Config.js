@@ -40,4 +40,5 @@ module.exports = {
     "1373567447",
   ], //app跟踪id
   reg: () => "cn", //默认区域：美国us 中国cn 香港hk
+  lastnumberofcar: () => "3" //北京尾号限行脚本填写汽车尾号
 };

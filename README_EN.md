@@ -56,6 +56,16 @@ Once the Config file is configured, the script runs prioritizing the settings wi
 
 <img src="https://github.com/evilbutcher/Scriptables/blob/master/picture/config.gif" height="30%" width="30%">
 
+### Disclaimer
+
+1. This script is only used for study and research, and does not guarantee its legitimacy, accuracy, and validity. Please make your own judgment based on the situation. I do not assume any guarantee responsibility for this.
+2. Since this script is only used for learning and research, you must completely delete all content from your computer or mobile phone or any storage device within 24 hours after downloading. I am not responsible for any incidents caused by violation of the regulations.
+3. Please do not use this script for any commercial or illegal purposes. If you violate the regulations, please be responsible for it.
+4. The application involved in this script has nothing to do with me, and I am not responsible for any privacy leakage or other consequences caused by this.
+5. I am not responsible for any problems caused by scripts, including but not limited to any loss and damage caused by script errors.
+6. If any unit or individual believes that this script may be suspected of infringing on their rights, they should promptly notify and provide proof of identity and ownership. We will delete this script after receiving the confirmation of the certification document.
+7. All people who directly or indirectly use or view this script should read this statement carefully. I reserve the right to change or supplement this statement at any time. Once you use or copy this script, you are deemed to have accepted this disclaimer.
+
 ### Visitors
 
 ![](http://profile-counter.glitch.me/evilbutcher/count.svg)
