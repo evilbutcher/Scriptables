@@ -84,7 +84,7 @@ function createWidget(img, detail) {
 
   w.addSpacer();
   w.spacing = 5;
-  w.presentMedium();
+  w.presentLarge();
   return w;
 }
 
