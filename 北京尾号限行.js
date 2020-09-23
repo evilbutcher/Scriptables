@@ -13,7 +13,7 @@ const $ = importModule("Env");
 try {
   var { lastnumberofcar } = importModule("Config");
   lastnumberofcar = lastnumberofcar();
-  console.log("将使用配置文件内尾号");
+  console.log("将使用配置文件内尾号: " + lastnumberofcar);
 } catch (e) {
   console.log("未获取汽车尾号，需正确配置");
 }
@@ -51,7 +51,7 @@ function createWidget(res) {
     w.addSpacer();
     w.spacing = 5;
 
-    if (lastnumberofcar == undefined) {
+    if (lastnumberofcar == undefined || lastnumberofcar == "") {
       var firstLine = w.addText(`🚙 北京尾号限行`);
     } else {
       if (group[0].limitedNumber.indexOf(lastnumberofcar) != -1) {
