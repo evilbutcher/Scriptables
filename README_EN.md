@@ -36,6 +36,8 @@ Checkin [Download](https://github.com/evilbutcher/Scriptables/blob/master/Checki
 
 App Price and Version Monitor [Download](https://github.com/evilbutcher/Scriptables/blob/master/AppPriceMonitor.js)
 
+Beijing's Tail Number Limit [Download](https://raw.githubusercontent.com/evilbutcher/Scriptables/master/%E5%8C%97%E4%BA%AC%E5%B0%BE%E5%8F%B7%E9%99%90%E8%A1%8C.js)
+
 ### Scripts Demo
 
 ##### App Price and Version Monitor Demo

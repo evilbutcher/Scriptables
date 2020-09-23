@@ -38,6 +38,8 @@ NASA 精简 [下载地址](https://github.com/evilbutcher/Scriptables/blob/maste
 
 App 价格及版本监控 [下载地址](https://github.com/evilbutcher/Scriptables/blob/master/AppPriceMonitor.js)
 
+北京尾号限行 [下载地址](https://raw.githubusercontent.com/evilbutcher/Scriptables/master/%E5%8C%97%E4%BA%AC%E5%B0%BE%E5%8F%B7%E9%99%90%E8%A1%8C.js)
+
 ### 脚本效果演示
 
 ##### App 价格及版本监控演示图片
