@@ -84,7 +84,7 @@ function createWidget(notifys) {
 function addTextToListWidget(text, listWidget) {
   let item = listWidget.addText(text);
   item.textColor = isDark ? Color.white() : Color.black();
-  item.textSize = 12;
+  item.font = new Font('SF Mono', 12);
 }
 
 function addTitleTextToListWidget(text, listWidget) {
@@ -93,7 +93,7 @@ function addTitleTextToListWidget(text, listWidget) {
   try {
     item.applyHeadlineTextStyling();
   } catch(e) {
-    item.textSize = 18;
+    item.font = new Font('SF Mono', 18);
   }
 }
 

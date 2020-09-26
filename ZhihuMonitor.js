@@ -76,7 +76,7 @@ function addTextToListWidget(text, listWidget) {
   } else {
     item.textColor = Color.white();
   }
-  item.textSize = 12;
+  item.font = new Font('SF Mono', 12);
 }
 
 function color16() {

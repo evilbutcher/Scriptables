@@ -36,7 +36,7 @@ bgColor.locations = [0.0, 1.0];
 function addTextToListWidget(text, listWidget) {
   let item = listWidget.addText(text);
   item.textColor = isDark ? Color.white() : Color.black();
-  item.textSize = size;
+  item.font = new Font('SF Mono', size);
 }
 function addTitleTextToListWidget(text, listWidget) {
   let item = listWidget.addText(text);
@@ -44,7 +44,7 @@ function addTitleTextToListWidget(text, listWidget) {
   try {
     item.applyHeadlineTextStyling();
   } catch(e) {
-    item.textSize = 18;
+    item.font = new Font('SF Mono', 18);
   }
 }
 
