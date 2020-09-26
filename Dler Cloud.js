@@ -321,7 +321,7 @@ function createWidget(checkintitle, checkinMsg, todayUsed, usedData, restData) {
   w.spacing = 5;
 
   const emoji = w.addText(`🪐`);
-  emoji.textSize = 30;
+  emoji.font = new Font('SF Mono', 30);
 
   addTitleTextToListWidget(checkintitle, w);
   addTextToListWidget(checkinMsg, w);
