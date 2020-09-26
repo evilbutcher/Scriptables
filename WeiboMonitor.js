@@ -45,12 +45,12 @@ function createWidget(res) {
     w.spacing = 5;
 
     const firstLine = w.addText(`🔥微博热搜`);
-    firstLine.textSize = 15;
+    firstLine.font = new Font('SF Mono', 15);
     firstLine.textColor = Color.white();
     firstLine.textOpacity = 0.7;
 
     const top1Line = w.addText(`📌 ${items[0]}`);
-    top1Line.textSize = 12;
+    top1Line.font = new Font('SF Mono', 12);
     top1Line.textColor = Color.white();
 
     for (var i = 1; i < items.length; i++) {
@@ -81,7 +81,7 @@ function addTextToListWidget(text, listWidget) {
   } else {
     item.textColor = Color.white();
   }
-  item.textSize = 12;
+  item.font = new Font('SF Mono', 12);
 }
 
 function color16() {

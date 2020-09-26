@@ -45,7 +45,7 @@ function createWidget(res) {
     w.spacing = 5;
 
     const firstLine = w.addText(`📖知乎热榜`);
-    firstLine.textSize = 15;
+    firstLine.font = new Font('SF Mono', 15);
     firstLine.textColor = Color.white();
     firstLine.textOpacity = 0.7;
 

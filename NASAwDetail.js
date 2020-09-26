@@ -79,7 +79,7 @@ function createWidget(img, detail) {
   imgLine.containerRelativeShape = true;
 
   const top1Line = w.addText(detail);
-  top1Line.textSize = 12;
+  top1Line.font = new Font('SF Mono', 12);
   top1Line.textColor = new Color("#7dbbae");
 
   w.addSpacer();
