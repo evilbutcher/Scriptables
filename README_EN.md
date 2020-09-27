@@ -8,7 +8,7 @@ Documentation and scripts instructions can be found in @GideonSenku [Scriptable]
 
 Thanks to @GideonSenku for the Env! Thanks to @MuTu88 for helping with testing!
 
-### How to install?
+### How to install?(Important)
 
 Env is required for all scripts, click [here](https://github.com/evilbutcher/Scriptables/blob/master/Env.js) to download and install Env.js.
 

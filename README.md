@@ -10,7 +10,7 @@
 
 感谢@GideonSenku 的 Env 感谢@MuTu88 帮忙测试
 
-### 如何安装？
+### 如何安装？（重要）
 
 全部脚本都需要 Env，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Env.js)下载安装 Env.js。
 
