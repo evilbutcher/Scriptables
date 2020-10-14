@@ -8,15 +8,13 @@
  */
 const goupdate = true; //默认关闭，需要更新时请手动打开
 const $ = importModule("Env");
-var num = 6; //自定义显示数量
-var rancolor = true; //true为开启随机颜色
+const preview = "medium";
+const spacing = 5;
 // 填写RSS订阅链接,默认为仓库的最近Commit
 // Fill in the RSS subscription link, the default is the latest Commit of the Repo
 var rsslink = "https://github.com/GideonSenku/Scriptable/commits/master.atom";
 try {
   const con = importModule("Config");
-  num = con.rssnum();
-  rancolor = con.rssrancolor();
   rsslink = con.rsslink();
   console.log("将使用配置文件内RSS配置");
 } catch (e) {
@@ -25,42 +23,39 @@ try {
 
 const res = await getinfo();
 
-let widget = createWidget(res);
+let widget = await createWidget(res);
 Script.setWidget(widget);
 Script.complete();
 
-function createWidget(res) {
+async function createWidget(res) {
   if (res.status == "ok") {
     var titlerss = res.feed.title;
     var group = res.items;
     items = [];
-    for (var i = 0; i < num; i++) {
+    for (var i = 0; i < 6; i++) {
       var item = group[i].title;
       items.push(item);
     }
     console.log(items);
 
-    const w = new ListWidget();
-    const bgColor = new LinearGradient();
-    bgColor.colors = [new Color("#1c1c1c"), new Color("#29323c")];
-    bgColor.locations = [0.0, 1.0];
-    w.backgroundGradient = bgColor;
-    w.addSpacer();
-    w.spacing = 5;
+    const title = `📻 ${titlerss}`;
+    const opts = {
+      title,
+      texts: {
+        text1: `• ${items[0]}`,
+        text2: `• ${items[1]}`,
+        text3: `• ${items[2]}`,
+        text4: `• ${items[3]}`,
+        text5: `• ${items[4]}`,
+        text6: `• ${items[5]}`,
+        battery: "true",
+      },
+      preview,
+      spacing,
+    };
 
-    const firstLine = w.addText(`📻${titlerss}`);
-    firstLine.font = new Font('SF Mono', 15);
-    firstLine.textColor = Color.white();
-    firstLine.textOpacity = 0.7;
-
-    for (var i = 0; i < items.length; i++) {
-      addTextToListWidget(`• ${items[i]}`, w);
-    }
-
-    w.addSpacer();
-    w.spacing = 5;
-    w.presentMedium();
-    return w;
+    let widget = await $.createWidget(opts);
+    return widget;
   }
 }
 
@@ -82,7 +77,7 @@ function addTextToListWidget(text, listWidget) {
   } else {
     item.textColor = Color.white();
   }
-  item.font = new Font('SF Mono', 12);
+  item.font = new Font("SF Mono", 12);
 }
 
 function color16() {

@@ -12,15 +12,6 @@ const title = `📖 知乎热榜`;
 const preview = "medium";
 const spacing = 5;
 
-try {
-  var { zhnum, zhrancolor } = importModule("Config");
-  num = zhnum();
-  rancolor = zhrancolor();
-  console.log("将使用配置文件内知乎配置");
-} catch (e) {
-  console.log("将使用脚本内知乎配置");
-}
-
 const res = await getinfo();
 
 let widget = await createWidget(res);
@@ -31,7 +22,7 @@ async function createWidget(res) {
   if (res.fresh_text == "热榜已更新") {
     var group = res.data;
     items = [];
-    for (var i = 0; i < num; i++) {
+    for (var i = 0; i < 6; i++) {
       var item = group[i].target.title;
       items.push(item);
     }
@@ -64,42 +55,6 @@ async function getinfo() {
   const res = await $.get(url);
   log(res);
   return res;
-}
-
-function addTextToListWidget(text, listWidget) {
-  let item = listWidget.addText(text);
-  if (rancolor == true) {
-    item.textColor = new Color(color16());
-  } else {
-    item.textColor = Color.white();
-  }
-  item.font = new Font('SF Mono', 12);
-}
-
-function color16() {
-  var r = Math.floor(Math.random() * 256);
-  if (r + 50 < 255) {
-    r = r + 50;
-  }
-  if (r > 230 && r < 255) {
-    r = r - 50;
-  }
-  var g = Math.floor(Math.random() * 256);
-  if (g + 50 < 255) {
-    g = g + 50;
-  }
-  if (g > 230 && g < 255) {
-    g = g - 50;
-  }
-  var b = Math.floor(Math.random() * 256);
-  if (b + 50 < 255) {
-    b = b + 50;
-  }
-  if (b > 230 && b < 255) {
-    b = b - 50;
-  }
-  var color = "#" + r.toString(16) + g.toString(16) + b.toString(16);
-  return color;
 }
 
 //更新代码

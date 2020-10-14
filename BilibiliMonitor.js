@@ -14,10 +14,8 @@ const preview = "medium";
 const spacing = 5;
 
 try {
-  var { bilibili, blnum, blrancolor } = importModule("Config");
+  var { bilibili } = importModule("Config");
   rid = bilibili();
-  num = blnum();
-  rancolor = blrancolor();
   console.log("将使用配置文件内B站配置");
 } catch (e) {
   console.log("将使用脚本内B站配置");
@@ -32,7 +30,7 @@ Script.complete();
 async function createWidget(res) {
   var group = res.data;
   items = [];
-  for (var i = 0; i < num; i++) {
+  for (var i = 0; i < 6; i++) {
     var item = group[i].title;
     items.push(item);
   }
@@ -64,42 +62,6 @@ async function getinfo() {
   const res = await $.get(blRequest);
   log(res);
   return res;
-}
-
-function addTextToListWidget(text, listWidget) {
-  let item = listWidget.addText(text);
-  if (rancolor == true) {
-    item.textColor = new Color(color16());
-  } else {
-    item.textColor = Color.white();
-  }
-  item.font = new Font('SF Mono', 12);
-}
-
-function color16() {
-  var r = Math.floor(Math.random() * 256);
-  if (r + 50 < 255) {
-    r = r + 50;
-  }
-  if (r > 230 && r < 255) {
-    r = r - 50;
-  }
-  var g = Math.floor(Math.random() * 256);
-  if (g + 50 < 255) {
-    g = g + 50;
-  }
-  if (g > 230 && g < 255) {
-    g = g - 50;
-  }
-  var b = Math.floor(Math.random() * 256);
-  if (b + 50 < 255) {
-    b = b + 50;
-  }
-  if (b > 230 && b < 255) {
-    b = b - 50;
-  }
-  var color = "#" + r.toString(16) + g.toString(16) + b.toString(16);
-  return color;
 }
 
 //更新代码

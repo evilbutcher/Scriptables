@@ -8,17 +8,9 @@
  */
 const goupdate = true;
 const $ = importModule("Env");
-var num = 6; //自定义显示数量
-var rancolor = true; //true为开启随机颜色
-
-try {
-  var { rrnum, rrrancolor } = importModule("Config");
-  num = rrnum();
-  rancolor = rrrancolor();
-  console.log("将使用配置文件内人人影视配置");
-} catch (e) {
-  console.log("将使用脚本内人人影视配置");
-}
+const title = `🎬 人人影视`;
+const preview = "medium";
+const spacing = 5;
 
 const res = await getinfo();
 
@@ -28,33 +20,29 @@ Script.complete();
 
 function createWidget(res) {
   items = [];
-  for (var i = 0; i < num; i++) {
+  for (var i = 0; i < 6; i++) {
     var item = res[i]["file_name"];
     items.push(item);
   }
   console.log(items);
 
-  const w = new ListWidget();
-  const bgColor = new LinearGradient();
-  bgColor.colors = [new Color("#1c1c1c"), new Color("#29323c")];
-  bgColor.locations = [0.0, 1.0];
-  w.backgroundGradient = bgColor;
-  w.addSpacer();
-  w.spacing = 5;
+  const opts = {
+    title,
+    texts: {
+      text1: `• ${items[0]}`,
+      text2: `• ${items[1]}`,
+      text3: `• ${items[2]}`,
+      text4: `• ${items[3]}`,
+      text5: `• ${items[4]}`,
+      text6: `• ${items[5]}`,
+      battery: "true",
+    },
+    preview,
+    spacing,
+  };
 
-  const firstLine = w.addText(`🎬人人影视`);
-  firstLine.font = new Font('SF Mono', 15);
-  firstLine.textColor = Color.white();
-  firstLine.textOpacity = 0.7;
-
-  for (var i = 0; i < items.length; i++) {
-    addTextToListWidget(`• ${items[i]}`, w);
-  }
-
-  w.addSpacer();
-  w.spacing = 5;
-  w.presentSmall();
-  return w;
+  let widget = await $.createWidget(opts);
+  return widget;
 }
 
 async function getinfo() {
@@ -69,42 +57,6 @@ async function getinfo() {
   const res = await $.get(zmzRequest);
   log(res);
   return res;
-}
-
-function addTextToListWidget(text, listWidget) {
-  let item = listWidget.addText(text);
-  if (rancolor == true) {
-    item.textColor = new Color(color16());
-  } else {
-    item.textColor = Color.white();
-  }
-  item.font = new Font('SF Mono', 12);
-}
-
-function color16() {
-  var r = Math.floor(Math.random() * 256);
-  if (r + 50 < 255) {
-    r = r + 50;
-  }
-  if (r > 230 && r < 255) {
-    r = r - 50;
-  }
-  var g = Math.floor(Math.random() * 256);
-  if (g + 50 < 255) {
-    g = g + 50;
-  }
-  if (g > 230 && g < 255) {
-    g = g - 50;
-  }
-  var b = Math.floor(Math.random() * 256);
-  if (b + 50 < 255) {
-    b = b + 50;
-  }
-  if (b > 230 && b < 255) {
-    b = b - 50;
-  }
-  var color = "#" + r.toString(16) + g.toString(16) + b.toString(16);
-  return color;
 }
 
 //更新代码
