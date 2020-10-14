@@ -1,17 +1,26 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
-// icon-color: blue; icon-glyph: magic;
+// icon-color: deep-brown; icon-glyph: magic;
 /**
  * Author: GideonSenku
  * Github: https://github.com/GideonSenku
  */
 
-
+var locationData, sunData
+const currentDate = new Date()
 const request = new Request('')
-const dict = FileManager.iCloud().documentsDirectory()
+const files = FileManager.iCloud()
+const dict = files.documentsDirectory()
+files.isDirectory(`${dict}/Env`) ? `` : files.createDirectory(`${dict}/Env`)
 const defaultHeaders = {
   "Accept": "*/*",
   "Content-Type": "application/json"
+}
+const textFormat = {
+    defaultText: { size: 14, color: "ffffff", font: "regular" },
+    battery: { size: 10, color: "", font: "bold" },
+    title: { size: 16, color: "", font: "semibold" },
+    SFMono: { size: 12, color: "ffffff", font: "SF Mono" }
 }
 /**
  * @description GET，返回String数据
@@ -239,49 +248,327 @@ const time = (fmt, ts = null) => {
 
 /**
  * @description create wiget
- * @param {*} pretitle required
  * @param {*} title required
- * @param {*} subtitle option
- * @param {*} other option
+ * @param {*} texts required
+ * @param {*} preview option
  */
-const createWidget = (pretitle, title, subtitle = '', other = '') => {
+const createWidget = async({ title, texts = { },spacing = 5, preview = '' }) => {
   let w = new ListWidget()
+  w.spacing = spacing
   
-  const bgColor = new LinearGradient()
-  bgColor.colors = [new Color("#a1c4fd"), new Color("#c2e9fb")]
-  bgColor.locations = [0.0, 1.0]
-  w.backgroundGradient = bgColor
-  w.addSpacer();
-  w.spacing = 5;
+  let gradient = new LinearGradient()
+  let gradientSettings = await setupGradient()
   
-  let preTxt = w.addText(pretitle)
-  preTxt.textColor = Color.black()
-  preTxt.applyHeadlineTextStyling()
+  gradient.colors = gradientSettings.color()
+  gradient.locations = gradientSettings.position()
   
-  let titleTxt = w.addText(title)
-  titleTxt.textSize = 12
-  titleTxt.textColor = Color.black()
+  w.backgroundGradient = gradient
+  texts['battery'] ? battery(w, title) : provideText(title, w, textFormat.title)
+  for (const text in texts) {
+    if (text != 'battery' && text != 'updateTime' && texts.hasOwnProperty(text)) {
+      const element = texts[text]
+      provideText(element, w, textFormat.SFMono)
+    }
+  }
+  texts['updateTime'] ? provideText(`[更新] ${time('MM-dd HH:mm')}`, w, textFormat.SFMono) : ``  
   
+  widgetPreview = preview ? preview: 'small'
   
-  let subTxt = w.addText(subtitle)
-  subTxt.textColor = Color.black()
-  subTxt.textSize = 12  
-  
-  let otherTxt = w.addText(other)
-  otherTxt.textColor = Color.black()
-  otherTxt.textSize = 12 
-
-  const updateLine = w.addText(`[更新] ${time('MM-dd HH:mm')}`)
-  updateLine.textSize = 12
-  updateLine.textColor = Color.black()
-  
-  w.presentSmall()
+  if(widgetPreview == "small") { w.presentSmall() }
+  else if (widgetPreview == "medium") { w.presentMedium() }
+  else if (widgetPreview == "large") { w.presentLarge() }
   return w
 }
 
 
+/**
+ * @description Provide a font based on the input.
+ * @param {*} fontName 
+ * @param {*} fontSize 
+ */
+const provideFont = (fontName, fontSize) => {
+  const fontGenerator = {
+    "ultralight": function() { return Font.ultraLightSystemFont(fontSize) },
+    "light": function() { return Font.lightSystemFont(fontSize) },
+    "regular": function() { return Font.regularSystemFont(fontSize) },
+    "medium": function() { return Font.mediumSystemFont(fontSize) },
+    "semibold": function() { return Font.semiboldSystemFont(fontSize) },
+    "bold": function() { return Font.boldSystemFont(fontSize) },
+    "heavy": function() { return Font.heavySystemFont(fontSize) },
+    "black": function() { return Font.blackSystemFont(fontSize) },
+    "italic": function() { return Font.italicSystemFont(fontSize) }
+  }
+  
+  const systemFont = fontGenerator[fontName]
+  if (systemFont) { return systemFont() }
+  return new Font(fontName, fontSize)
+}
+ 
+
+/**
+ * @description Add formatted text to a container.
+ * @param {*} string 
+ * @param {*} container widget container
+ * @param {*} format Object: size, color, font
+ */
+
+const provideText = (string, container, format) => {
+  
+  const textItem = container.addText(string)
+  const textFont = format.font || textFormat.defaultText.font
+  const textSize = format.size || textFormat.defaultText.size
+  const textColor = format.color || textFormat.defaultText.color
+  
+  textItem.font = provideFont(textFont, textSize)
+  textItem.textColor = new Color(textColor)
+  return textItem
+}
+
+// Set up the gradient for the widget background.
+const setupGradient = async() => {
+  
+  // Requirements: sunrise
+  if (!sunData) { await setupSunrise() }
+
+  let gradient = {
+    dawn: {
+      color() { return [new Color("142C52"), new Color("1B416F"), new Color("62668B")] },
+      position() { return [0, 0.5, 1] },
+    },
+
+    sunrise: {
+      color() { return [new Color("274875"), new Color("766f8d"), new Color("f0b35e")] },
+      position() { return [0, 0.8, 1.5] },
+    },
+
+    midday: {
+      color() { return [new Color("3a8cc1"), new Color("90c0df")] },
+      position() { return [0, 1] },
+    },
+
+    noon: {
+      color() { return [new Color("b2d0e1"), new Color("80B5DB"), new Color("3a8cc1")] },
+      position() { return [-0.2, 0.2, 1.5] },
+    },
+
+    sunset: {
+      color() { return [new Color("32327A"), new Color("662E55"), new Color("7C2F43")] },
+      position() { return [0.1, 0.9, 1.2] },
+    },
+
+    twilight: {
+      color() { return [new Color("021033"), new Color("16296b"), new Color("414791")] },
+      position() { return [0, 0.5, 1] },
+    },
+
+    night: {
+      color() { return [new Color("16296b"), new Color("021033"), new Color("021033"), new Color("113245")] },
+      position() { return [-0.5, 0.2, 0.5, 1] },
+    },
+  }
+
+  const sunrise = sunData.sunrise
+  const sunset = sunData.sunset
+  const utcTime = currentDate.getTime()
+
+  function closeTo(time,mins) {
+    return Math.abs(utcTime - time) < (mins * 60000)
+  }
+
+  // Use sunrise or sunset if we're within 30min of it.
+  if (closeTo(sunrise,15)) { return gradient.sunrise }
+  if (closeTo(sunset,15)) { return gradient.sunset }
+
+  // In the 30min before/after, use dawn/twilight.
+  if (closeTo(sunrise,45) && utcTime < sunrise) { return gradient.dawn }
+  if (closeTo(sunset,45) && utcTime > sunset) { return gradient.twilight }
+
+  // Otherwise, if it's night, return night.
+  if (isNight(currentDate)) { return gradient.night }
+
+  // If it's around noon, the sun is high in the sky.
+  if (currentDate.getHours() == 12) { return gradient.noon }
+  // Otherwise, return the "typical" theme.
+  return gradient.midday
+}
+
+// Set up the sunData object.
+const setupSunrise = async () => {
+
+  // Requirements: location
+  if (!locationData) { await setupLocation() }
+
+  // Set up the sunrise/sunset cache.
+  const sunCachePath = files.joinPath(dict, "Env/Env-sun")
+  const sunCacheExists = files.fileExists(sunCachePath)
+  const sunCacheDate = sunCacheExists ? files.modificationDate(sunCachePath) : 0
+  var sunDataRaw
+
+  // If cache exists and it was created today, use cached data.
+  if (sunCacheExists && sameDay(currentDate, sunCacheDate)) {
+    const sunCache = files.readString(sunCachePath)
+    sunDataRaw = JSON.parse(sunCache)
+
+  // Otherwise, use the API to get sunrise and sunset times.
+  } else {
+    const sunReq = "https://api.sunrise-sunset.org/json?lat=" + locationData.latitude + "&lng=" + locationData.longitude + "&formatted=0&date=" + currentDate.getFullYear() + "-" + (currentDate.getMonth()+1) + "-" + currentDate.getDate()
+    sunDataRaw = await new Request(sunReq).loadJSON()
+    files.writeString(sunCachePath, JSON.stringify(sunDataRaw))
+  }
+
+  // Store the timing values.
+  sunData = {}
+  sunData.sunrise = new Date(sunDataRaw.results.sunrise).getTime()
+  sunData.sunset = new Date(sunDataRaw.results.sunset).getTime()
+}
+
+const setupLocation = async (lockLocation = true) => {
+
+  locationData = {}
+  const locationPath = files.joinPath(dict, "Env/Env-location")
+
+  // If our location is unlocked or cache doesn't exist, ask iOS for location.
+  var readLocationFromFile = false
+  if (!lockLocation || !files.fileExists(locationPath)) {
+    try {
+      const location = await Location.current()
+      locationData.latitude = location.latitude
+      locationData.longitude = location.longitude
+      files.writeString(locationPath, location.latitude + "," + location.longitude)
+      
+    } catch(e) {
+      // If we fail in unlocked mode, read it from the cache.
+      if (!lockLocation) { readLocationFromFile = true }
+      
+      // We can't recover if we fail on first run in locked mode.
+      else { return }
+    }
+  }
+  
+  // If our location is locked or we need to read from file, do it.
+  if (lockLocation || readLocationFromFile) {
+    const locationStr = files.readString(locationPath).split(",")
+    locationData.latitude = locationStr[0]
+    locationData.longitude = locationStr[1]
+  }
+  return locationData
+}
+
+// Determines if the provided date is at night.
+const isNight = (dateInput) => {
+  const timeValue = dateInput.getTime()
+  return (timeValue < sunData.sunrise) || (timeValue > sunData.sunset)
+}
+// Determines if two dates occur on the same day
+const sameDay = (d1, d2) => {
+  return d1.getFullYear() === d2.getFullYear() &&
+    d1.getMonth() === d2.getMonth() &&
+    d1.getDate() === d2.getDate()
+}
+/**
+ * @description 返回电池百分比
+ */
+const renderBattery = () => {
+  const batteryLevel = Device.batteryLevel()
+  const batteryAscii = `${Math.round(batteryLevel * 100)}%`
+  return batteryAscii
+}
+
+
+// Add a battery element to the widget; consisting of a battery icon and percentage.
+function battery(column,title) {
+  const batteryLevel = Device.batteryLevel()
+  // Set up the battery level item
+  let batteryStack = column.addStack()
+  provideText(title, batteryStack, textFormat.title)
+  
+  batteryStack.centerAlignContent()
+  
+  batteryStack.addSpacer()
+  
+  let batteryIcon = batteryStack.addImage(provideBatteryIcon())
+  batteryIcon.imageSize = new Size(20,20)
+  
+
+  // Change the battery icon to red if battery level is <= 20 to match system behavior
+  if ( Math.round(batteryLevel * 100) > 20 || Device.isCharging() ) {
+
+    batteryIcon.tintColor = Color.white()
+
+  } else {
+
+    batteryIcon.tintColor = Color.red()
+
+  }
+
+  // Display the battery status
+  let batteryInfo = provideText('  '+renderBattery(), batteryStack, textFormat.battery)
+
+
+}
+
+
+// Provide a battery SFSymbol with accurate level drawn on top of it.
+function provideBatteryIcon() {
+  
+  // Set the size of the battery icon.
+  const batteryWidth = 87
+  const batteryHeight = 41
+  
+  // Start our draw context.
+  let draw = new DrawContext()
+  draw.opaque = false
+  draw.respectScreenScale = true
+  draw.size = new Size(batteryWidth, batteryHeight)
+  
+  // Draw the battery.
+  draw.drawImageInRect(SFSymbol.named("battery.0").image, new Rect(0, 0, batteryWidth, batteryHeight))
+  
+  // Match the battery level values to the SFSymbol.
+  const x = batteryWidth*0.1525
+  const y = batteryHeight*0.247
+  const width = batteryWidth*0.602
+  const height = batteryHeight*0.505
+  
+  // Prevent unreadable icons.
+  let level = Device.batteryLevel()
+  if (level < 0.05) { level = 0.05 }
+  
+  // Determine the width and radius of the battery level.
+  const current = width * level
+  let radius = height/6.5
+  
+  // When it gets low, adjust the radius to match.
+  if (current < (radius * 2)) { radius = current / 2 }
+
+  // Make the path for the battery level.
+  let barPath = new Path()
+  barPath.addRoundedRect(new Rect(x, y, current, height), radius, radius)
+  draw.addPath(barPath)
+  draw.setFillColor(Color.black())
+  draw.fillPath()
+  return draw.getImage()
+}
+
 const logErr = (e, messsage) => {
   console.error(e)
+}
+
+function test() {
+  createWidget({
+    title: "移动",
+    texts: {
+      one: "1",
+      one1: "1",
+      one2: "1",
+      one3: "1",
+      onee3: "1",
+      one3e: "1",
+      battery: "true"
+    },
+    preview: "small"
+
+  })
 }
 
 module.exports = {
@@ -304,5 +591,8 @@ module.exports = {
   input,
   time,
   createWidget,
+  provideText,
+  setupLocation,
+  renderBattery,
   logErr
 }
