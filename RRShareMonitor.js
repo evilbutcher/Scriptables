@@ -18,7 +18,7 @@ let widget = createWidget(res);
 Script.setWidget(widget);
 Script.complete();
 
-function createWidget(res) {
+await function createWidget(res) {
   items = [];
   for (var i = 0; i < 6; i++) {
     var item = res[i]["file_name"];
