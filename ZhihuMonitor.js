@@ -6,10 +6,11 @@
  * Github: https://github.com/evilbutcher
  * 本脚本使用了@Gideon_Senku的Env.scriptable，感谢！
  */
-const goupdate = true;
+const goupdate = false;
 const $ = importModule("Env");
-var num = 6; //自定义显示数量
-var rancolor = true; //true为开启随机颜色
+const title = `📖 知乎热榜`;
+const preview = "medium";
+const spacing = 5;
 
 try {
   var { zhnum, zhrancolor } = importModule("Config");
@@ -22,11 +23,11 @@ try {
 
 const res = await getinfo();
 
-let widget = createWidget(res);
+let widget = await createWidget(res);
 Script.setWidget(widget);
 Script.complete();
 
-function createWidget(res) {
+async function createWidget(res) {
   if (res.fresh_text == "热榜已更新") {
     var group = res.data;
     items = [];
@@ -36,27 +37,23 @@ function createWidget(res) {
     }
     console.log(items);
 
-    const w = new ListWidget();
-    const bgColor = new LinearGradient();
-    bgColor.colors = [new Color("#1c1c1c"), new Color("#29323c")];
-    bgColor.locations = [0.0, 1.0];
-    w.backgroundGradient = bgColor;
-    w.addSpacer();
-    w.spacing = 5;
+    const opts = {
+      title,
+      texts: {
+        text1: `• ${items[0]}`,
+        text2: `• ${items[1]}`,
+        text3: `• ${items[2]}`,
+        text4: `• ${items[3]}`,
+        text5: `• ${items[4]}`,
+        text6: `• ${items[5]}`,
+        battery: "true",
+      },
+      preview,
+      spacing,
+    };
 
-    const firstLine = w.addText(`📖知乎热榜`);
-    firstLine.font = new Font('SF Mono', 15);
-    firstLine.textColor = Color.white();
-    firstLine.textOpacity = 0.7;
-
-    for (var i = 0; i < items.length; i++) {
-      addTextToListWidget(`• ${items[i]}`, w);
-    }
-
-    w.addSpacer();
-    w.spacing = 5;
-    w.presentSmall();
-    return w;
+    let widget = await $.createWidget(opts);
+    return widget;
   }
 }
 
