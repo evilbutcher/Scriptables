@@ -8,8 +8,9 @@
  */
 const goupdate = true;
 const $ = importModule("Env");
-var num = 6; //自定义显示数量
-var rancolor = true; //true为开启随机颜色
+const title = `🔥 微博热搜`;
+const preview = "medium";
+const spacing = 5;
 
 try {
   var { wbnum, wbrancolor } = importModule("Config");
@@ -22,11 +23,11 @@ try {
 
 const res = await getinfo();
 
-let widget = createWidget(res);
+let widget = await createWidget(res);
 Script.setWidget(widget);
 Script.complete();
 
-function createWidget(res) {
+async function createWidget(res) {
   if (res.data.cards[0].title == "实时热点，每分钟更新一次") {
     var group = res.data.cards[0]["card_group"];
     items = [];
@@ -36,31 +37,23 @@ function createWidget(res) {
     }
     console.log(items);
 
-    const w = new ListWidget();
-    const bgColor = new LinearGradient();
-    bgColor.colors = [new Color("#1c1c1c"), new Color("#29323c")];
-    bgColor.locations = [0.0, 1.0];
-    w.backgroundGradient = bgColor;
-    w.addSpacer();
-    w.spacing = 5;
+    const opts = {
+      title,
+      texts: {
+        text1: `📌 ${items[0]}`,
+        text2: `• ${items[1]}`,
+        text3: `• ${items[2]}`,
+        text4: `• ${items[3]}`,
+        text5: `• ${items[4]}`,
+        text6: `• ${items[5]}`,
+        battery: "true",
+      },
+      preview,
+      spacing,
+    };
 
-    const firstLine = w.addText(`🔥微博热搜`);
-    firstLine.font = new Font('SF Mono', 15);
-    firstLine.textColor = Color.white();
-    firstLine.textOpacity = 0.7;
-
-    const top1Line = w.addText(`📌 ${items[0]}`);
-    top1Line.font = new Font('SF Mono', 12);
-    top1Line.textColor = Color.white();
-
-    for (var i = 1; i < items.length; i++) {
-      addTextToListWidget(`• ${items[i]}`, w);
-    }
-
-    w.addSpacer();
-    w.spacing = 5;
-    w.presentSmall();
-    return w;
+    let widget = await $.createWidget(opts);
+    return widget;
   }
 }
 
@@ -70,7 +63,7 @@ async function getinfo() {
       "https://m.weibo.cn/api/container/getIndex?containerid=106003%26filter_type%3Drealtimehot",
   };
   const res = await $.get(url);
-  log(res);
+  //log(res);
   return res;
 }
 
@@ -81,7 +74,7 @@ function addTextToListWidget(text, listWidget) {
   } else {
     item.textColor = Color.white();
   }
-  item.font = new Font('SF Mono', 12);
+  item.font = new Font("SF Mono", 12);
 }
 
 function color16() {
