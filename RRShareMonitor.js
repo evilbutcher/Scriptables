@@ -14,7 +14,7 @@ const spacing = 5;
 
 const res = await getinfo();
 
-let widget = createWidget(res);
+let widget = await createWidget(res);
 Script.setWidget(widget);
 Script.complete();
 
