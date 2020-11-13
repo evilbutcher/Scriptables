@@ -16,7 +16,8 @@
 
 下载想要使用的.js 文件后，直接导入 Scriptable 即可。也可使用 Install Scripts 一键安装所有脚本，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Install%20Scripts.js)下载安装 Install Scripts.js。
 
-如果想要保持自动更新，又想要自定义脚本内设置，需要使用 Config，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Config.js)下载安装 Config.js。
+~~如果想要保持自动更新，又想要自定义脚本内设置，需要使用 Config，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Config.js)下载安装 Config.js。~~
+2020.11.13更新：注意，因为模板采用Env生成，热门监控类脚本的Config会失效，其他脚本的Config配置正常。
 
 ### 脚本安装
 
