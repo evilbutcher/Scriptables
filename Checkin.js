@@ -42,7 +42,7 @@ function addTitleTextToListWidget(text, listWidget) {
   let item = listWidget.addText(text);
   item.textColor = isDark ? Color.white() : Color.black();
   try {
-    item.applyHeadlineTextStyling();
+    item.font = Font.boldSystemFont(18);
   } catch(e) {
     item.font = new Font('SF Mono', 18);
   }
