@@ -10,15 +10,19 @@
 
 感谢@GideonSenku 的 Env 感谢@MuTu88 帮忙测试
 
+### 更新
+
+2020.11.24 恢复了 Config.js 支持的脚本文件。
+
+2020.11.13 注意，因为模板采用 Env 生成，热门监控类脚本的 Config 会失效，其他脚本的 Config 配置正常。
+
 ### 如何安装？（重要）
 
 全部脚本都需要 Env，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Env.js)下载安装 Env.js。
 
 下载想要使用的.js 文件后，直接导入 Scriptable 即可。也可使用 Install Scripts 一键安装所有脚本，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Install%20Scripts.js)下载安装 Install Scripts.js。
 
-~~如果想要保持自动更新，又想要自定义脚本内设置，需要使用 Config，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Config.js)下载安装 Config.js。~~  
-
-2020.11.13 更新：注意，因为模板采用 Env 生成，热门监控类脚本的 Config 会失效，其他脚本的 Config 配置正常。
+~~如果想要保持自动更新，又想要自定义脚本内设置，需要使用 Config，点击[这里](https://github.com/evilbutcher/Scriptables/blob/master/Config.js)下载安装 Config.js。~~
 
 ### 脚本安装
 
