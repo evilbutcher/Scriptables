@@ -11,12 +11,24 @@ const $ = importModule("Env");
 const title = `🎞 豆瓣电影`;
 const preview = "medium";
 const spacing = 5;
+const goto = 'app'; // 可更改为 browser，跳转到浏览器，选择跳转 app 时若未安装 app，则会无响应
 
 const res = await getinfo();
 
 let widget = await createWidget(res);
 Script.setWidget(widget);
 Script.complete();
+
+function decideGoto(item) {
+  switch(goto) {
+    case 'app':
+      return item.uri;
+    case 'browser':
+      return item.url;
+    default:
+      return void 0;
+  }
+}
 
 async function createWidget(res) {
   var group = res["subject_collection_items"];
@@ -37,12 +49,12 @@ async function createWidget(res) {
   const opts = {
     title,
     texts: {
-      text1: `• ${items[0]}`,
-      text2: `• ${items[1]}`,
-      text3: `• ${items[2]}`,
-      text4: `• ${items[3]}`,
-      text5: `• ${items[4]}`,
-      text6: `• ${items[5]}`,
+      text1: { text: `• ${items[0]}`, url: decideGoto(group[0]) },
+      text2: { text: `• ${items[1]}`, url: decideGoto(group[1]) },
+      text3: { text: `• ${items[2]}`, url: decideGoto(group[2]) },
+      text4: { text: `• ${items[3]}`, url: decideGoto(group[3]) },
+      text5: { text: `• ${items[4]}`, url: decideGoto(group[4]) },
+      text6: { text: `• ${items[5]}`, url: decideGoto(group[5]) },
       battery: "true",
     },
     preview,
