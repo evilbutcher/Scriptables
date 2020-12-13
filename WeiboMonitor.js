@@ -31,12 +31,12 @@ async function createWidget(res) {
     const opts = {
       title,
       texts: {
-        text1: `📌 ${items[0]}`,
-        text2: `• ${items[1]}`,
-        text3: `• ${items[2]}`,
-        text4: `• ${items[3]}`,
-        text5: `• ${items[4]}`,
-        text6: `• ${items[5]}`,
+        text1: { text: `📌 ${items[0]}`, url: group[0].scheme },
+        text2: { text: `• ${items[1]}`, url: group[1].scheme },
+        text3: { text: `• ${items[2]}`, url: group[2].scheme },
+        text4: { text: `• ${items[3]}`, url: group[3].scheme },
+        text5: { text: `• ${items[4]}`, url: group[4].scheme },
+        text6: { text: `• ${items[5]}`, url: group[5].scheme },
         battery: "true",
       },
       preview,

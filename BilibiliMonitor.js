@@ -11,6 +11,7 @@ const $ = importModule("Env");
 var rid = 0; //rid对应不同的B站榜单：0全站，1动画，3音乐，4游戏，5娱乐，36科技，119鬼畜，129舞蹈。
 const title = `💗 B站榜单`;
 const preview = "medium";
+const goto = 'app'; // 可更改为 browser，跳转到浏览器，选择跳转 app 时若未安装 app，则会无响应
 const spacing = 5;
 
 try {
@@ -27,6 +28,17 @@ let widget = await createWidget(res);
 Script.setWidget(widget);
 Script.complete();
 
+function decideGoto(item) {
+  switch(goto) {
+    case 'app':
+      return item.uri;
+    case 'browser':
+      return `https://bilibili.com/${item.goto}${item.param}`;
+    default:
+      return void 0;
+  }
+}
+
 async function createWidget(res) {
   var group = res.data;
   items = [];
@@ -39,12 +51,12 @@ async function createWidget(res) {
   const opts = {
     title,
     texts: {
-      text1: `• ${items[0]}`,
-      text2: `• ${items[1]}`,
-      text3: `• ${items[2]}`,
-      text4: `• ${items[3]}`,
-      text5: `• ${items[4]}`,
-      text6: `• ${items[5]}`,
+      text1: { text: `• ${group[0].title}`, url: decideGoto(group[0]) },
+      text2: { text: `• ${group[1].title}`, url: decideGoto(group[1]) },
+      text3: { text: `• ${group[2].title}`, url: decideGoto(group[2]) },
+      text4: { text: `• ${group[3].title}`, url: decideGoto(group[3]) },
+      text5: { text: `• ${group[4].title}`, url: decideGoto(group[4]) },
+      text6: { text: `• ${group[5].title}`, url: decideGoto(group[5]) },
       battery: "true",
     },
     preview,
