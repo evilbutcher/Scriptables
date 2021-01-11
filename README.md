@@ -10,6 +10,9 @@
 
 感谢@GideonSenku 的 Env 感谢@MuTu88 帮忙测试
 
+如果能请杯奶茶，就很感谢啦！  
+<img src="https://raw.githubusercontent.com/evilbutcher/Quantumult_X/master/picture/photo.jpeg" height="40%" width="40%">
+
 ### 更新
 
 2020.11.24 恢复了 Config.js 支持的脚本文件。
