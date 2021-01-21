@@ -46,3 +46,8 @@ widget.Install
 widget.Install.js
 YouTube.js
 ZXTrains.js
+CountDownCalendar.js
+crypto-js.js
+PoisonCalendarText.js
+*.json
+crypto-js.js
