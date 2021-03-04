@@ -33,7 +33,7 @@ B 站榜单 [下载地址](https://github.com/evilbutcher/Scriptables/blob/maste
 
 豆瓣电影监控 [下载地址](https://github.com/evilbutcher/Scriptables/blob/master/DoubanMonitor.js)
 
-人人影视资源 [下载地址](https://github.com/evilbutcher/Scriptables/blob/master/RRShareMonitor.js)
+~~人人影视资源 [下载地址](https://github.com/evilbutcher/Scriptables/blob/master/RRShareMonitor.js)~~
 
 RSS 监控 [下载地址](https://github.com/evilbutcher/Scriptables/blob/master/RSSMonitor.js)
 

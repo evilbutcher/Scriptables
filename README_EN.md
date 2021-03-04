@@ -14,7 +14,7 @@ Env is required for all scripts, click [here](https://github.com/evilbutcher/Scr
 
 After downloading the .js file you want to use, you can just import to Scriptable directly. You can also use Install Scripts to install all the scripts in one click, click [here](https://github.com/evilbutcher/Scriptables/blob/master/Install%20Scripts.js) to download and install Install Scripts.js.
 
-If you want to keep it updated automatically and want to customize the settings within the script, you need to use Config. Click [here](https://github.com/evilbutcher/Scriptables/blob/master/Config.js) to download and install Config.js.
+~~If you want to keep it updated automatically and want to customize the settings within the script, you need to use Config. Click [here](https://github.com/evilbutcher/Scriptables/blob/master/Config.js) to download and install Config.js.~~
 
 ### Script Installation
 
@@ -22,7 +22,7 @@ Bilibili Monitor [Download](https://github.com/evilbutcher/Scriptables/blob/mast
 
 Douban Movie Monitor [Download](https://github.com/evilbutcher/Scriptables/blob/master/DoubanMonitor.js)
 
-RRShare Monitor [Download](https://github.com/evilbutcher/Scriptables/blob/master/RRShareMonitor.js)
+~~RRShare Monitor [Download](https://github.com/evilbutcher/Scriptables/blob/master/RRShareMonitor.js)~~
 
 RSS Monitor [Download](https://github.com/evilbutcher/Scriptables/blob/master/RSSMonitor.js)
 
